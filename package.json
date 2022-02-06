@@ -1,0 +1,29 @@
+{
+  "name": "latergram",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js",
+    "build:ui": "rm -rf build && cd ./client npm run build && cp -r build ../",
+    "start:both": "concurrently --kill-others-on-fail \"npm run start\" \"npm run dev --prefix client\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-express": "^3.0.2",
+    "aws-sdk": "^2.1069.0",
+    "bcrypt": "^5.0.1",
+    "concurrently": "^7.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "lodash.merge": "^4.6.2",
+    "mongoose": "^6.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
