@@ -3,7 +3,7 @@
 import React, { ReactElement } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { timer } from "../../utils/timer";
+import { timer } from "../../utils/Timer";
 import Avatar from "../../../assets/profileimg.jpg";
 
 export default function HomeFeedPostCommentsComment({ comment }) {

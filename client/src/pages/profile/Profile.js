@@ -2,10 +2,10 @@
 
 import React, { useState, useCallback, useEffect, ReactElement } from "react";
 import { useQuery } from "@apollo/client";
-import ProfileDetails from "./profile-details";
+import ProfileDetails from "./Details";
 import styled from "styled-components";
-import ProfilePosts from "./profile-posts";
-import { GET_USER_BY_ID } from "../../graphql/queries";
+import ProfilePosts from "./Posts";
+import { GET_USER_BY_ID } from "../../graphql/Queries";
 import { useParams } from "react-router-dom";
 
 export default function UserProfile({ match }) {

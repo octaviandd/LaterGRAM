@@ -3,9 +3,9 @@
 import { useQuery, useMutation } from "@apollo/client";
 import React, { ReactElement, useState } from "react";
 import styled from "styled-components";
-import { GET_CURRENT_USER } from "../../graphql/queries";
-import Spinner from "../../utils/spinner";
-import { CHANGE_AVATAR } from "../../graphql/mutations";
+import { GET_CURRENT_USER } from "../../graphql/Queries";
+import Spinner from "../../utils/Spinner";
+import { CHANGE_AVATAR } from "../../graphql/Mutations";
 import { Formik, Form } from "formik";
 
 import { nanoid } from "nanoid";

@@ -3,19 +3,19 @@
 import React, { ReactElement, useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Navbar from "../../navbar/navbar";
+import Navbar from "../../navbar/Navbar";
 import Picture from "../../../assets/carousel4.jpg";
 import Avatar from "../../../assets/profileimg.jpg";
-import { timer } from "../../utils/timer";
-import Comment from "../home/home-feed-post-comments-comment";
+import { timer } from "../../utils/Timer";
+import Comment from "../home/CommentComments";
 import {
   GET_POST,
   GET_CURRENT_USER,
   GET_POST_COMMENTS,
-} from "../../graphql/queries";
-import { LIKE_POST, UNLIKE_POST, NEW_COMMENT } from "../../graphql/mutations";
+} from "../../graphql/Queries";
+import { LIKE_POST, UNLIKE_POST, NEW_COMMENT } from "../../graphql/Mutations";
 import { useQuery, useMutation } from "@apollo/client";
-import Spinner from "../../utils/spinner";
+import Spinner from "../../utils/Spinner";
 
 export default function Post({
   match: {

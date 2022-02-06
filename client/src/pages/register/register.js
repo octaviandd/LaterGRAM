@@ -1,7 +1,7 @@
 /** @format */
 import React from "react";
-import RegisterLogo from "./register-logo";
-import RegisterInputs from "./register-inputs";
+import RegisterLogo from "./Logo";
+import RegisterInputs from "./Inputs";
 import styled from "styled-components";
 
 export default function Register(props) {

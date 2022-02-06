@@ -2,13 +2,12 @@
 
 import React, { ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
-import NavbarSearchbar from "./navbar-searchbar";
+import NavbarSearchbar from "./NavbarSearchBar";
 import { Link } from "react-router-dom";
-import NavbarLinks from "./navbar-links";
-import NavbarSearchbarDropdown from "./navbar-searchbar-dropdown";
-import { GET_USERS, GET_CURRENT_USER } from "../graphql/queries";
+import NavbarLinks from "./NavbarLinks";
+import NavbarSearchDropDown from "./NavbarSearchDropDown";
+import { GET_USERS, GET_CURRENT_USER } from "../graphql/Queries";
 import { useQuery } from "@apollo/client";
-import Cookies from "js-cookie";
 
 export default function Navbar({}) {
   const [state, setState] = useState({
@@ -34,7 +33,6 @@ export default function Navbar({}) {
   };
 
   const logOut = () => {
-    Cookies.remove("id");
     window.location.reload(false);
   };
 
@@ -68,7 +66,7 @@ export default function Navbar({}) {
         />
         <NavbarLinks user={currentData} logOut={logOut} />
         {state.isSearchingActive && (
-          <NavbarSearchbarDropdown searchValue={state.inputValue} />
+          <NavbarSearchDropDown searchValue={state.inputValue} />
         )}
       </Wrapper>
     </NavbarWrapper>

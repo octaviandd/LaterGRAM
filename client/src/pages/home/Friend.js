@@ -4,10 +4,10 @@ import React, { ReactElement, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Avatar from "../../../assets/profileimg.jpg";
-import { FOLLOW_USER } from "../../graphql/mutations";
-import { GET_CURRENT_USER } from "../../graphql/queries";
+import { FOLLOW_USER } from "../../graphql/Mutations";
+import { GET_CURRENT_USER } from "../../graphql/Queries";
 import { useMutation } from "@apollo/client";
-import Spinner from "../../utils/spinner";
+import Spinner from "../../utils/Spinner";
 
 export default function HomeFriendsFriend({ user }) {
   const [isFollowing, follow] = useState(false);

@@ -1,7 +1,7 @@
 /** @format */
 import React from "react";
 import styled from "styled-components";
-import device from "../../utils/global-styles";
+import device from "../../utils/GlobalStyles";
 
 export default function RegisterLogo() {
   return (

@@ -2,10 +2,10 @@
 
 import React from "react";
 import styled from "styled-components";
-import LoginInputs from "./login-inputs";
-import LoginCarousel from "./login-carousel";
-import LoginLogo from "./login-logo";
-import device from "../../utils/global-styles";
+import LoginInputs from "./Inputs";
+import LoginCarousel from "./Carousel";
+import LoginLogo from "./Logo";
+import device from "../../utils/GlobalStyles";
 
 export default function Login(props) {
   return (

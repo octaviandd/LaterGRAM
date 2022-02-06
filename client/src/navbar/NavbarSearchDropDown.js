@@ -2,9 +2,9 @@
 
 import React, { ReactElement } from "react";
 import styled from "styled-components";
-import { GET_USERS } from "../graphql/queries";
+import { GET_USERS } from "../graphql/Queries";
 import { useQuery } from "@apollo/client";
-import Spinner from "../utils/spinner";
+import Spinner from "../utils/Spinner";
 import { Link } from "react-router-dom";
 
 export default function NavbarSearchDropdown({ searchValue }) {

@@ -2,11 +2,11 @@
 
 import React, { ReactElement } from "react";
 import styled from "styled-components";
-import HomeFeedPost from "./home-feed-post";
+import HomeFeedPost from "./Post";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_POSTS, GET_CURRENT_USER } from "../../graphql/queries";
-import Spinner from "../../utils/spinner";
-import HomeFeedPostGenerator from "./home-feed-post-generator";
+import { GET_ALL_POSTS, GET_CURRENT_USER } from "../../graphql/Queries";
+import Spinner from "../../utils/Spinner";
+import HomeFeedPostGenerator from "./PostGenerator";
 
 const compare = (a, b) => {
   const timeA = a.createdAt.toUpperCase();

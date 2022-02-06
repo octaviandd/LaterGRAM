@@ -3,14 +3,14 @@
 import "../style.css";
 import React from "react";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
-import Login from "./pages/login/login-father";
-import Register from "./pages/register/register";
-import Profile from "./pages/profile/user-profile";
-import Home from "./pages/home/home";
-import PrivateRoute from "./utils/private-route";
-import Explore from "./pages/explore/explore";
-import Post from "./pages/post/post";
-import Navbar from "./navbar/navbar";
+import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
+import Profile from "./pages/profile/Profile";
+import Home from "./pages/home/Home";
+import PrivateRoute from "./utils/PrivateRoute";
+import Explore from "./pages/explore/Explore";
+import Post from "./pages/post/Post";
+import Navbar from "./navbar/Navbar";
 
 export default function App() {
   return (

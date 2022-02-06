@@ -4,8 +4,9 @@ import React, { ReactElement } from "react";
 import styled from "styled-components";
 import { Field, Formik } from "formik";
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../../graphql/mutations";
+import { NEW_USER } from "../../graphql/Mutations";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const isValidEmail = (email) => {
   const regex =
@@ -13,32 +14,32 @@ const isValidEmail = (email) => {
   return regex.test(String(email).toLowerCase());
 };
 
-export default function LoginFormik({ statusState, handleInput }) {
-  const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER);
+export default function RegisterFormik({ statusState, handleInput }) {
+  const [registerUser, { data, loading, error }] = useMutation(NEW_USER);
   const history = useNavigate();
   const submitForm = async (values, resetForm) => {
     try {
-      await loginUser({
+      await registerUser({
         variables: {
           input: {
+            name: values.name,
+            username: values.username,
             email: values.email,
             password: values.password,
           },
         },
       }).then((res) => {
-        console.log(res);
+        window.localStorage.setItem("token", res.data.createUser.token);
         resetForm();
-        history.push("/");
+        history("/", { replace: true });
       });
-    } catch {
-      console.error(error);
-    }
+    } catch {}
   };
 
   return (
     <div>
       <Formik
-        initialValues={{ password: "", email: "" }}
+        initialValues={{ name: "", password: "", username: "", email: "" }}
         onSubmit={(values, { resetForm }) => {
           submitForm(values, resetForm);
         }}
@@ -48,7 +49,7 @@ export default function LoginFormik({ statusState, handleInput }) {
             <h4>Sign up to see photos and videos from your friends.</h4>
             <label>
               <EmailLegend emailStatus={statusState.emailStatus}>
-                Username or e-mail
+                Email
               </EmailLegend>
               <StyledField
                 type="email"
@@ -60,6 +61,30 @@ export default function LoginFormik({ statusState, handleInput }) {
               <div id="feedback">{props.errors.email}</div>
             )}
             <label>
+              <NameLegend nameStatus={statusState.nameStatus}>Name</NameLegend>
+              <StyledField
+                type="text"
+                name="name"
+                onKeyUp={(e) => handleInput(e)}
+              />
+              {props.errors.name && (
+                <div id="feedback">{props.errors.name}</div>
+              )}
+            </label>
+            <label>
+              <UsernameLegend usernameStatus={statusState.usernameStatus}>
+                Username
+              </UsernameLegend>
+              <StyledField
+                type="text"
+                name="username"
+                onKeyUp={(e) => handleInput(e)}
+              />
+              {props.errors.username && (
+                <div id="feedback">{props.errors.username}</div>
+              )}
+            </label>
+            <label>
               <PasswordLegend passwordStatus={statusState.passwordStatus}>
                 Password
               </PasswordLegend>
@@ -68,11 +93,11 @@ export default function LoginFormik({ statusState, handleInput }) {
                 name="password"
                 onKeyUp={(e) => handleInput(e)}
               />
+              {props.errors.password && (
+                <div id="feedback">{props.errors.password}</div>
+              )}
             </label>
-            {props.errors.password && (
-              <div id="feedback">{props.errors.password}</div>
-            )}
-            <SubmitButton type="submit">Login</SubmitButton>
+            <SubmitButton type="submit">Register</SubmitButton>
           </StyledForm>
         )}
       </Formik>
@@ -131,9 +156,44 @@ const TextLegend = styled.span`
   transition: all 0.1s ease-in-out;
 `;
 
+const NameLegend = styled(TextLegend)`
+  ${({ nameStatus }) =>
+    nameStatus &&
+    `
+      left: 8px;
+      font-size: 10px;
+      top: 5px;
+      overflow:hidden;
+      color: rgba(var(--f52,142,142,142),1);
+      text-overflow: ellipsis;
+
+      + input {
+        padding: 14px 0 2px 8px;
+        font-size: 12px;
+      }
+    `}
+`;
+
 const PasswordLegend = styled(TextLegend)`
   ${({ passwordStatus }) =>
     passwordStatus &&
+    `
+      left: 8px;
+      font-size: 10px;
+      top: 5px;
+      overflow:hidden;
+      color: rgba(var(--f52,142,142,142),1);
+      text-overflow: ellipsis;
+      + input {
+        padding: 14px 0 2px 8px;
+        font-size: 12px;
+      }
+    `}
+`;
+
+const UsernameLegend = styled(TextLegend)`
+  ${({ usernameStatus }) =>
+    usernameStatus &&
     `
       left: 8px;
       font-size: 10px;

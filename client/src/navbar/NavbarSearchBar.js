@@ -4,7 +4,12 @@ import React, { ReactElement } from "react";
 import styled from "styled-components";
 import { FaSearch, FaTimes } from "react-icons/fa";
 
-export default function SearchBar({ value, handleInput, clearText, active }) {
+export default function NavbarSearchBar({
+  value,
+  handleInput,
+  clearText,
+  active,
+}) {
   return (
     <>
       <Wrapper>

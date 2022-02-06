@@ -3,9 +3,9 @@
 import React, { ReactElement } from "react";
 import styled from "styled-components";
 // import Navbar from "../components/navbar";
-import { GET_ALL_POSTS, GET_CURRENT_USER } from "../../graphql/queries";
+import { GET_ALL_POSTS, GET_CURRENT_USER } from "../../graphql/Queries";
 import { useQuery } from "@apollo/client";
-import Spinner from "../../utils/spinner";
+import Spinner from "../../utils/Spinner";
 import HeartSVG from "../../../assets/svgs/LikedSVG";
 import CommentSVG from "../../../assets/svgs/UnlikedHeartSVG";
 import { Link } from "react-router-dom";

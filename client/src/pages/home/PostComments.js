@@ -2,11 +2,11 @@
 
 import React, { ReactElement, useState, useEffect } from "react";
 import styled from "styled-components";
-import { timer } from "../../utils/timer";
+import { timer } from "../../utils/Timer";
 import { Link } from "react-router-dom";
-import Comment from "./home-feed-post-comments-comment";
-import { GET_POST_COMMENTS } from "../../graphql/queries";
-import { NEW_COMMENT } from "../../graphql/mutations";
+import Comment from "./CommentComments";
+import { GET_POST_COMMENTS } from "../../graphql/Queries";
+import { NEW_COMMENT } from "../../graphql/Mutations";
 
 import { useQuery, useMutation } from "@apollo/client";
 

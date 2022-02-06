@@ -3,10 +3,10 @@ import { useQuery } from "@apollo/client";
 import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { GET_CURRENT_USER, GET_USERS } from "../../graphql/queries";
-import Spinner from "../../utils/spinner";
-import Watermark from "../../utils/watermark";
-import FriendProfile from "./home-friends-friend";
+import { GET_CURRENT_USER, GET_USERS } from "../../graphql/Queries";
+import Spinner from "../../utils/Spinner";
+import Watermark from "../../utils/Watermark";
+import FriendProfile from "./Friend";
 
 export default function HomeFriends({}) {
   const { data, error, loading } = useQuery(GET_CURRENT_USER);

@@ -2,9 +2,9 @@
 
 import React, { ReactElement } from "react";
 import styled from "styled-components";
-import HomeStory from "./home-story";
-import HomeFriends from "./home-friends";
-import HomeFeed from "./home-feed";
+import HomeStory from "./Story";
+import HomeFriends from "./Friends";
+import HomeFeed from "./Feed";
 
 export default function Home({ currentUser }) {
   return (

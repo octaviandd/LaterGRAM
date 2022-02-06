@@ -1,25 +1,23 @@
 /** @format */
 
-import React, { ReactElement, useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, ReactElement } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import MyForm from "./register-formik";
+import { FaGithub } from "react-icons/fa";
+import LoginFormik from "./Formik";
 
-export default function RegisterInputs({ history }) {
+export default function LoginInputs({}) {
   const [status, setStatus] = useState({
-    nameStatus: false,
     emailStatus: false,
     passwordStatus: false,
-    usernameStatus: false,
   });
+
   const [state, setState] = useState({
-    name: "",
     email: "",
-    username: "",
     password: "",
   });
 
-  const { name, email, username, password } = state;
+  const { email, password } = state;
 
   const handleInput = (e) => {
     const target = e.target.value;
@@ -37,59 +35,54 @@ export default function RegisterInputs({ history }) {
   };
 
   useEffect(() => {
-    name !== ""
-      ? setInputStatus("nameStatus", true)
-      : setInputStatus("nameStatus", false);
     email !== ""
       ? setInputStatus("emailStatus", true)
       : setInputStatus("emailStatus", false);
     password !== ""
       ? setInputStatus("passwordStatus", true)
       : setInputStatus("passwordStatus", false);
-    username !== ""
-      ? setInputStatus("usernameStatus", true)
-      : setInputStatus("usernameStatus", false);
-  }, [name, password, email, username]);
+  }, [password, email]);
 
   return (
     <Wrapper>
-      <InnerWrapper>
-        <MyForm handleInput={handleInput} statusState={status} />
-        <Redirect>
-          <p>
-            Have an account?<Link to="/login"> Log In</Link>
-          </p>
-        </Redirect>
-      </InnerWrapper>
+      <FormSection>
+        <LoginFormik handleInput={handleInput} statusState={status} />
+      </FormSection>
+      <RegisterLink>
+        <p>
+          Don't have an account? <Link to="/register">Sign up</Link>
+        </p>
+      </RegisterLink>
+      <WaterMark>
+        <p>Made by Octavian David</p>
+        <a href="http://github.com/octaviandd">
+          <FaGithub />
+        </a>
+      </WaterMark>
     </Wrapper>
   );
 }
 
-const Wrapper = styled.section`
-  width: 100%;
-  min-height: 100vh;
-  position: relative;
-  font-family: "Roboto", sans-serif;
-`;
-
-const InnerWrapper = styled.div`
+const Wrapper = styled("div")`
   display: flex;
   flex-direction: column;
   height: 618px;
   max-width: 350px;
   width: 100%;
   flex-shrink: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   -webkit-box-shadow: 4px 2px 23px -4px rgba(32, 29, 30, 1);
   -moz-box-shadow: 4px 2px 23px -4px rgba(32, 29, 30, 1);
   box-shadow: 4px 2px 23px -4px rgba(32, 29, 30, 1);
   border-radius: 20px;
 `;
 
-const Redirect = styled.div`
+const FormSection = styled.section`
+  background: rgba(var(--d87, 255, 255, 255), 1);
+  width: 100%;
+  border-radius: 20px;
+`;
+
+const RegisterLink = styled.div`
   border-top: 1px solid #dbdbdb;
   border-bottom: 1px solid #dbdbdb;
   margin-bottom: 0.3rem;
@@ -104,5 +97,24 @@ const Redirect = styled.div`
       font-weight: 600;
       cursor: pointer;
     }
+  }
+`;
+
+const WaterMark = styled.div`
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: flex;
+  padding-top: 3rem;
+  padding-bottom: 1rem;
+  flex-direction: column;
+  align-items: center;
+  p {
+    text-align: center;
+    color: grey;
+  }
+  a {
+    margin-top: 1rem;
+    color: grey;
+    font-size: 20px;
   }
 `;

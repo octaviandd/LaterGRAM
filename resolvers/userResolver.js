@@ -69,10 +69,6 @@ const userResolver = {
       });
 
       const token = createToken(user);
-      // res.cookie("id", token, {
-      //   maxAge: 1000 * 60 * 60 * 24 * 7,
-      // });
-      console.log(user, token);
       user.save();
       return { user, token };
     },
@@ -89,11 +85,6 @@ const userResolver = {
         throw new AuthenticationError("Invalid password");
       }
       const token = createToken(user);
-      // res.cookie("id", token, {
-      //   httpOnly: false,
-      //   secure: true,
-      //   maxAge: 1000 * 60 * 60 * 24 * 7,
-      // });
       return { user, token };
     },
     changeAvatar: authenticated(async (root, args, ctx) => {

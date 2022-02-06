@@ -2,9 +2,9 @@
 
 import React, { ReactElement, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { GET_CURRENT_USER } from "../graphql/queries";
+import { GET_CURRENT_USER } from "../graphql/Queries";
 import { useQuery } from "@apollo/client";
-import Spinner from "./spinner";
+import Spinner from "./Spinner";
 
 export default function PrivateRoute({ children }) {
   const { data, error, loading } = useQuery(GET_CURRENT_USER);

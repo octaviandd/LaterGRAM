@@ -3,17 +3,17 @@
 import React, { ReactElement, useEffect, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import EditDots from "../../utils/edit-dots";
+import EditDots from "../../utils/EditDots";
 import CommentSVG from "../../../assets/svgs/CommentSVG";
 import SaveSVG from "../../../assets/svgs/SaveSVG";
 import LikedSVG from "../../../assets/svgs/LikedSVG";
 import UnlikedHeart from "../../../assets/svgs/UnlikedHeartSVG";
 import MessageSVG from "../../../assets/svgs/MessageSVG";
-import Comments from "./home-feed-post-comments";
-import { LIKE_POST, UNLIKE_POST } from "../../graphql/mutations";
-import { GET_CURRENT_USER } from "../../graphql/queries";
+import Comments from "./PostComments";
+import { LIKE_POST, UNLIKE_POST } from "../../graphql/Mutations";
+import { GET_CURRENT_USER } from "../../graphql/Queries";
 import { useQuery, useMutation } from "@apollo/client";
-import Spinner from "../../utils/spinner";
+import Spinner from "../../utils/Spinner";
 
 export default function HomeFeedPost({ post }) {
   const [state, updateState] = useState();

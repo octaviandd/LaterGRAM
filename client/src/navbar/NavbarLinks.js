@@ -7,7 +7,7 @@ import ExploreSVG from "../../assets/svgs/ExploreSVG";
 import MessageSVG from "../../assets/svgs/MessageSVG";
 import UnlikedHeartSVG from "../../assets/svgs/UnlikedHeartSVG";
 import { Link } from "react-router-dom";
-import NavbarSettings from "./navbar-settings";
+import NavbarSettings from "./NavbarSettings";
 
 export default function NavbarLinks({ user, logOut }) {
   const [activeDropdown, activateDropdown] = useState(false);

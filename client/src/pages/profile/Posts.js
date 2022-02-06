@@ -3,8 +3,8 @@
 import { useQuery } from "@apollo/client";
 import React, { ReactElement } from "react";
 import styled from "styled-components";
-import { GET_CURRENT_USER, GET_USER_BY_ID } from "../../graphql/queries";
-import Spinner from "../../utils/spinner";
+import { GET_CURRENT_USER, GET_USER_BY_ID } from "../../graphql/Queries";
+import Spinner from "../../utils/Spinner";
 
 export default function ProfilePosts({ id }) {
   const {
