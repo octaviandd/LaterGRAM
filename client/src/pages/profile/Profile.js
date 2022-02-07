@@ -8,7 +8,7 @@ import ProfilePosts from "./Posts";
 import { GET_USER_BY_ID } from "../../graphql/Queries";
 import { useParams } from "react-router-dom";
 
-export default function UserProfile({ match }) {
+export default function UserProfile({}) {
   const { id } = useParams();
 
   const {
@@ -45,10 +45,12 @@ export default function UserProfile({ match }) {
 }
 
 const Wrapper = styled.section`
+  width: 100%;
   position: relative;
   display: flex;
   align-items: center;
   flex-direction: column;
+  min-height: 100vh;
 `;
 
 const Breakpoint = styled.div`

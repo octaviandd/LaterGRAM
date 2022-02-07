@@ -11,13 +11,14 @@ import Spinner from "../../utils/Spinner";
 import { useDropzone } from "react-dropzone";
 import { Field, Formik } from "formik";
 import { nanoid } from "nanoid";
+import AWS from "aws-sdk";
 
-// AWS.config.update({
-//   region: "eu-central-1",
-//   credentials: new AWS.CognitoIdentityCredentials({
-//     IdentityPoolId: "eu-central-1:df1bc5d5-1bee-4dab-b02f-283bf46d2db9",
-//   }),
-// });
+AWS.config.update({
+  region: "eu-central-1",
+  credentials: new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: "eu-central-1:df1bc5d5-1bee-4dab-b02f-283bf46d2db9",
+  }),
+});
 
 export default function HomeFeedPostGenerator({}) {
   const [state, setState] = useState({
@@ -29,20 +30,20 @@ export default function HomeFeedPostGenerator({}) {
   const [uploadPicture, { data, error, loading }] = useMutation(SINGLE_UPLOAD);
 
   const onDrop = useCallback(async ([file]) => {
-    // const s3 = new AWS.S3.ManagedUpload({
-    //   params: {
-    //     Bucket: "latergram",
-    //     Key: `${nanoid()}${file.name}`,
-    //     Body: file,
-    //   },
-    // });
-    // let result = s3.promise();
-    // result.then((res) => {
-    //   setState((prevState) => ({
-    //     ...prevState,
-    //     picture: res.Location,
-    //   }));
-    // });
+    const s3 = new AWS.S3.ManagedUpload({
+      params: {
+        Bucket: "latergram",
+        Key: `${nanoid()}${file.name}`,
+        Body: file,
+      },
+    });
+    let result = s3.promise();
+    result.then((res) => {
+      setState((prevState) => ({
+        ...prevState,
+        picture: res.Location,
+      }));
+    });
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -61,7 +62,9 @@ export default function HomeFeedPostGenerator({}) {
       const data = cache.readQuery({ query: GET_ALL_POSTS });
       cache.writeQuery({
         query: GET_ALL_POSTS,
-        data: { results: [createPost, ...data.data] },
+        data: {
+          data: data.getAllPosts.concat(createPost),
+        },
       });
     },
   });

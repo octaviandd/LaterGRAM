@@ -29,7 +29,7 @@ export default function HomeFeed({}) {
   if (loading) return <Spinner />;
 
   const { following, _id: currentUserID } = currentUser.data;
-  const postsArray = data.data;
+  const postsArray = data.getAllPosts;
 
   const newArr = postsArray.slice();
   newArr.sort(compare);

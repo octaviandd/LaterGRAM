@@ -83,7 +83,7 @@ export const SINGLE_UPLOAD = gql`
 
 export const CHANGE_AVATAR = gql`
   mutation ($input: String!) {
-    results: changeAvatar(input: $input) {
+    changeAvatar(input: $input) {
       _id
     }
   }

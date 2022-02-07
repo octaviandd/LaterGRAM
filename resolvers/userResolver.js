@@ -20,7 +20,7 @@ const userResolver = {
     getMe: authenticated(async (parent, args, ctx) => {
       const { user } = ctx;
       const presentUser = await ctx.models.User.findOne({
-        _id: user.id._id,
+        _id: user._id,
       })
         .populate({
           path: "following",
@@ -32,7 +32,6 @@ const userResolver = {
       const userToBeReturned = await ctx.models.User.findOne({
         _id: args.input,
       }).populate("posts");
-      console.log(userToBeReturned);
       return userToBeReturned;
     }),
     getUsers: authenticated(async (root, args, ctx) => {
@@ -45,7 +44,6 @@ const userResolver = {
     createUser: async (root, args, ctx) => {
       const { email, name, username, password } = args.input;
       const { models, createToken, res } = ctx;
-      console.log(res);
       const existing = await models.User.findOne({
         email: email,
       });
@@ -87,19 +85,15 @@ const userResolver = {
       const token = createToken(user);
       return { user, token };
     },
-    changeAvatar: authenticated(async (root, args, ctx) => {
-      const currentUser = await ctx.models.User.findOneAndUpdate(
-        { _id: ctx.user.id._id },
-        { avatar: args.input },
-        { useFindAndModify: false },
-        function (res, err) {
-          if (err) {
-            console.log(err);
-          }
-          return res;
-        }
+    changeAvatar: authenticated(async (_, { input }, { user, models }) => {
+      const currentUser = await models.User.findOneAndUpdate(
+        { _id: user._id },
+        { avatar: input },
+        { useFindAndModify: false, new: true }
       );
-      return ctx.user.id;
+      console.log(currentUser);
+
+      return currentUser;
     }),
 
     createComment: authenticated(async (_, { input }, { models, user }) => {

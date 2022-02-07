@@ -1,6 +1,7 @@
 /** @format */
 
 import React, { ReactElement, useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 import { timer } from "../../utils/Timer";
 import { Link } from "react-router-dom";
@@ -10,7 +11,7 @@ import { NEW_COMMENT } from "../../graphql/Mutations";
 
 import { useQuery, useMutation } from "@apollo/client";
 
-export default function HomeFeedPostComments({
+export default function PostComments({
   id,
   username,
   author,
@@ -40,10 +41,13 @@ export default function HomeFeedPostComments({
     },
   });
 
-  const handleInput = (e) => {
+  const onSubmit = (content) => {
+    createComment({
+      variables: { input: { content, _id: id } },
+    });
     setState((prevState) => ({
       ...prevState,
-      inputValue: e.target.value,
+      inputValue: "",
     }));
   };
 
@@ -72,17 +76,26 @@ export default function HomeFeedPostComments({
         </div>
         {data &&
           data.results.map((comment) => {
-            return <Comment comment={comment}></Comment>;
+            return <Comment comment={comment} key={uuidv4()}></Comment>;
           })}
         <Timer>{timerDifference && timerDifference}</Timer>
         <AddCommentsContainer>
-          <form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              onSubmit(e.target[0].value);
+            }}
+          >
             <input
               type="text"
               name="content"
-              onChange={(e) => handleInput(e)}
               value={state.inputValue}
-              // ref={register({ required: true, minlength: 1 })}
+              onChange={(e) =>
+                setState((prevState) => ({
+                  ...prevState,
+                  inputValue: e.target.value,
+                }))
+              }
             />
             <WriteCommentSpan active={state.isInputActive}>
               Add a comment..

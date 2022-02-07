@@ -30,8 +30,6 @@ const postResolver = {
         comments: [],
       });
 
-      console.log(post);
-
       presentUser.updateOne(
         { $addToSet: { posts: post } },
         { useFindAndModify: false, new: true },
@@ -40,7 +38,6 @@ const postResolver = {
           return res;
         }
       );
-      console.log(presentUser);
       post.save();
       return post;
     }),

@@ -100,7 +100,7 @@ export const GET_USER_BY_ID = gql`
 
 export const GET_ALL_POSTS = gql`
   query {
-    data: getAllPosts {
+    getAllPosts {
       picture
       _id
       description

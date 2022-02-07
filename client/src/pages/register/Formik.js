@@ -6,13 +6,6 @@ import { Field, Formik } from "formik";
 import { useMutation } from "@apollo/client";
 import { NEW_USER } from "../../graphql/Mutations";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
-
-const isValidEmail = (email) => {
-  const regex =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return regex.test(String(email).toLowerCase());
-};
 
 export default function RegisterFormik({ statusState, handleInput }) {
   const [registerUser, { data, loading, error }] = useMutation(NEW_USER);

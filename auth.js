@@ -16,9 +16,9 @@ const createToken = (id) => {
 const getUserFromToken = (token) => {
   try {
     const user = jwt.verify(token, JWT_SECRET);
-    return user;
+    return user.id;
   } catch (error) {
-    throw new AuthenticationError("Invalid Token");
+    return null;
   }
 };
 

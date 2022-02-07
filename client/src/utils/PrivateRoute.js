@@ -12,7 +12,5 @@ export default function PrivateRoute({ children }) {
   if (error) console.log(error);
   if (loading) return <Spinner></Spinner>;
 
-  console.log(data);
-
   return data ? <>{children}</> : <Navigate to="/login" />;
 }
