@@ -83,8 +83,8 @@ Available routes:
 - terminal
 - AWS Container
 
-<!-- ![LoginImage](./assets/loginscreen.png)
-![RegisterImage](./assets/registerscreen.png)
-![ProfileImage](./assets/profilescreen.png)
-![PostImage](./assets/postscreen.png)
-![ExporeImage](./assets/explorescreen.png) -->
+![LoginImage](./gitAssets/loginscreen.png)
+![RegisterImage](./gitAssets/registerscreen.png)
+![ProfileImage](./gitAssets/profilescreen.png)
+![PostImage](./gitAssets/postscreen.png)
+![ExporeImage](./gitAssets/explorescreen.png)

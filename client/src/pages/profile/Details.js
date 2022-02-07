@@ -29,8 +29,6 @@ export default function ProfileDetails() {
   //HOOKS
   const [isFollowing, follow] = useState(false);
   const [isActive, setActive] = useState(false);
-  const { register, handleSubmit, errors } = useForm();
-  const [picture, addPicture] = useState("");
   const { id } = useParams();
 
   //MUTATIONS && QUERIES
@@ -50,14 +48,13 @@ export default function ProfileDetails() {
         const data = cache.readQuery({ query: GET_CURRENT_USER });
         cache.writeQuery({
           query: GET_CURRENT_USER,
-          data: { data: { avatar: changeAvatar } },
+          data: { data: changeAvatar },
         });
       },
     }
   );
 
   const onDrop = useCallback(async ([file]) => {
-    console.log(file);
     const s3 = new AWS.S3.ManagedUpload({
       params: {
         Bucket: "latergram",
@@ -67,7 +64,6 @@ export default function ProfileDetails() {
     });
     let result = s3.promise();
     result.then((res) => {
-      addPicture(res.Location);
       changeAvatar({
         variables: { input: res.Location },
       });
