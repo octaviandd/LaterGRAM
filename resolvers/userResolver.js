@@ -126,37 +126,35 @@ const userResolver = {
     followUser: authenticated(async (_, { input }, { models, user }) => {
       const userToBeFollowed = await models.User.findOne({ _id: input });
       const currentUser = await models.User.findOneAndUpdate(
-        { _id: user.id },
+        { _id: user._id },
         { $addToSet: { following: userToBeFollowed } },
         { useFindAndModify: false, new: true }
       );
+      console.log({ userToBeFollowed, currentUser });
 
       userToBeFollowed.updateOne(
         { $addToSet: { followers: currentUser } },
         { useFindAndModify: false, new: true }
       );
 
+      currentUser.save();
+      userToBeFollowed.save();
       return userToBeFollowed;
     }),
     unfollowUser: authenticated(async (_, { input }, { user, models }) => {
       const userToBeUnfollowed = await models.User.findOne({ _id: input });
       const currentUser = await models.User.findOneAndUpdate(
-        { _id: user.id },
+        { _id: user._id },
         { $pull: { following: userToBeUnfollowed._id } },
-        { useFindAndModify: false, new: true },
-        function (err, res) {
-          if (err) console.log(err);
-          return res;
-        }
+        { useFindAndModify: false, new: true }
       );
       userToBeUnfollowed.updateOne(
         { $pull: { followers: currentUser._id } },
-        { useFindAndModify: false, new: true },
-        function (err, res) {
-          if (err) console.log(err);
-          return res;
-        }
+        { useFindAndModify: false, new: true }
       );
+
+      currentUser.save();
+      userToBeUnfollowed.save();
 
       return userToBeUnfollowed;
     }),

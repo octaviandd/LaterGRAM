@@ -73,7 +73,9 @@ export default function RegisterInputs({}) {
         resetForm();
         history("/", { replace: true });
       });
-    } catch {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleInput = (e) => {
@@ -115,7 +117,6 @@ export default function RegisterInputs({}) {
     state.passwordError,
   ]);
 
-  if (error) return "Error..";
   if (loading) return <Spinner />;
   return (
     <Wrapper>

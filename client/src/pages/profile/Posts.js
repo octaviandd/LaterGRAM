@@ -20,7 +20,6 @@ export default function ProfilePosts({ id }) {
 
   const { posts } = data.data;
 
-  console.log(data);
   return (
     <Wrapper>
       <ImagesGrid>

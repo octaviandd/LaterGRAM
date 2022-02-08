@@ -14,10 +14,15 @@ export default function HomeFriendsFriend({ user }) {
   const [followUser, { error, loading }] = useMutation(FOLLOW_USER, {
     update(cache, { data: { followUser } }) {
       const data = cache.readQuery({ query: GET_CURRENT_USER });
+      console.log(data);
+      console.log(followUser);
       cache.writeQuery({
         query: GET_CURRENT_USER,
         data: {
-          results: { following: [followUser, ...data.results.following] },
+          data: {
+            ...data.data,
+            following: [followUser, ...data.data.following],
+          },
         },
       });
     },

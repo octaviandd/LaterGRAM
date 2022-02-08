@@ -68,20 +68,57 @@ export default function ProfileDetails() {
     });
   }, []);
 
-  const [followUser, { error: error1, loading: loading1 }] =
-    useMutation(FOLLOW_USER);
+  const [followUser, { error: error1, loading: loading1 }] = useMutation(
+    FOLLOW_USER,
+    {
+      update(cache, { data: { followUser } }) {
+        const data = cache.readQuery({ query: GET_CURRENT_USER });
+        console.log(data);
+        console.log(followUser);
+        cache.writeQuery({
+          query: GET_CURRENT_USER,
+          data: {
+            data: {
+              ...data.data,
+              following: [followUser, ...data.data.following],
+            },
+          },
+        });
+      },
+    }
+  );
 
-  const [unfollowUser, { error: error3, loading: loading3 }] =
-    useMutation(UNFOLLOW_USER);
+  const [unfollowUser, { error: error3, loading: loading3 }] = useMutation(
+    UNFOLLOW_USER,
+    {
+      update(cache, { data: { followUser } }) {
+        const data = cache.readQuery({ query: GET_CURRENT_USER });
+        console.log(data);
+        console.log(followUser);
+        cache.writeQuery({
+          query: GET_CURRENT_USER,
+          data: {
+            data: {
+              ...data.data,
+              following: [
+                data.data.following.filter((id) => id === unfollowUser._id),
+              ],
+            },
+          },
+        });
+      },
+    }
+  );
 
   // COMPONENT METHODS
 
-  const followTheUser = () => {
-    followUser({ variables: { input: newId } });
+  const followTheUser = (thisID) => {
+    console.log({ thisID });
+    followUser({ variables: { input: thisID } });
   };
 
-  const unfollowTheUser = () => {
-    unfollowUser({ variables: { input: newId } });
+  const unfollowTheUser = (thisID) => {
+    unfollowUser({ variables: { input: thisID } });
   };
 
   //DESTRUCTURING
@@ -102,6 +139,7 @@ export default function ProfileDetails() {
       _id: newId,
       avatar,
     } = data2.data;
+
     return (
       <>
         <MainContainer>
@@ -126,14 +164,17 @@ export default function ProfileDetails() {
                     {data.data.following.find(({ _id }) => newId === _id) ? (
                       <UnfollowButton
                         isFollowing={isFollowing}
-                        onClick={(newId) => unfollowTheUser(newId)}
+                        onClick={() => unfollowTheUser(newId)}
                       >
                         Following
                       </UnfollowButton>
                     ) : (
                       <FollowButton
                         isFollowing={isFollowing}
-                        onClick={() => followTheUser(newId)}
+                        onClick={() => {
+                          console.log({ newId });
+                          followTheUser(newId);
+                        }}
                       >
                         Follow
                       </FollowButton>

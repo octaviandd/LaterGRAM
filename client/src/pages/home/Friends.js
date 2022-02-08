@@ -17,8 +17,6 @@ export default function HomeFriends({}) {
 
   const { _id, username, following, avatar } = data.data;
 
-  console.log(usersData);
-
   return (
     <Wrapper>
       <Profile>
