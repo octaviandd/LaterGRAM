@@ -1,6 +1,6 @@
 /** @format */
 
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { GET_CURRENT_USER, GET_USER_BY_ID } from "../../graphql/Queries";
@@ -11,10 +11,7 @@ import {
   UNFOLLOW_USER,
 } from "../../graphql/Mutations";
 import { useDropzone } from "react-dropzone";
-import { Formik, Form } from "formik";
 import AWS from "aws-sdk";
-import { useForm } from "react-hook-form";
-import { FaTimes } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 

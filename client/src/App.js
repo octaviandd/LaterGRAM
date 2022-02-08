@@ -36,7 +36,10 @@ export default function App() {
             path="/profile/:id"
             element={
               <PrivateRoute>
-                <Profile />
+                <>
+                  <Navbar />
+                  <Profile />
+                </>
               </PrivateRoute>
             }
           />
@@ -45,7 +48,10 @@ export default function App() {
             path="/post/:id"
             element={
               <PrivateRoute>
-                <Post />
+                <>
+                  <Navbar />
+                  <Post />
+                </>
               </PrivateRoute>
             }
           />
@@ -54,7 +60,10 @@ export default function App() {
             path="/explore"
             element={
               <PrivateRoute>
-                <Explore />
+                <>
+                  <Navbar />
+                  <Explore />
+                </>
               </PrivateRoute>
             }
           />

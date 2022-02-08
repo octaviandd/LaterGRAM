@@ -55,16 +55,26 @@ export const LOGIN_USER = gql`
 export const CREATE_POST = gql`
   mutation CreatePost($input: NewPostInput!) {
     createPost(input: $input) {
-      description
       picture
-      author {
-        posts {
-          _id
-        }
-      }
+      _id
+      description
       createdAt
       likes {
         _id
+      }
+      author {
+        _id
+        username
+        avatar
+      }
+      comments {
+        _id
+        content
+        author {
+          _id
+          avatar
+          username
+        }
       }
     }
   }

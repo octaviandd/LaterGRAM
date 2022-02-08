@@ -3,13 +3,14 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
 import NavbarSearchbar from "./NavbarSearchBar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavbarLinks from "./NavbarLinks";
 import NavbarSearchDropDown from "./NavbarSearchDropDown";
 import { GET_USERS, GET_CURRENT_USER } from "../graphql/Queries";
 import { useQuery } from "@apollo/client";
 
 export default function Navbar({}) {
+  let navigate = useNavigate();
   const [state, setState] = useState({
     isSearchingActive: false,
     inputValue: "",
@@ -33,7 +34,8 @@ export default function Navbar({}) {
   };
 
   const logOut = () => {
-    window.location.reload(false);
+    window.localStorage.clear();
+    navigate("/", { replace: true });
   };
 
   useEffect(() => {

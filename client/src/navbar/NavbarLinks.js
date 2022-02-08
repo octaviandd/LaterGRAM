@@ -20,18 +20,8 @@ export default function NavbarLinks({ user, logOut }) {
         </Link>
       </div>
       <div>
-        <Link to="">
-          <MessageSVG />
-        </Link>
-      </div>
-      <div>
         <Link to="/explore">
           <ExploreSVG />
-        </Link>
-      </div>
-      <div>
-        <Link to="">
-          <UnlikedHeartSVG />
         </Link>
       </div>
       <div>
@@ -45,7 +35,11 @@ export default function NavbarLinks({ user, logOut }) {
       </div>
       <div>
         {activeDropdown && (
-          <NavbarSettings id={user.data._id} logOut={logOut} />
+          <NavbarSettings
+            id={user.data._id}
+            logOut={logOut}
+            activateDropdown={activateDropdown}
+          />
         )}
       </div>
     </Wrapper>

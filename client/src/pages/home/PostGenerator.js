@@ -5,11 +5,9 @@ import styled from "styled-components";
 import { useMutation } from "@apollo/client";
 import { FcPicture } from "react-icons/fc";
 import { FaPlusCircle, FaTimes } from "react-icons/fa";
-import { SINGLE_UPLOAD, CREATE_POST } from "../../graphql/Mutations";
+import { CREATE_POST } from "../../graphql/Mutations";
 import { GET_ALL_POSTS } from "../../graphql/Queries";
-import Spinner from "../../utils/Spinner";
 import { useDropzone } from "react-dropzone";
-import { Field, Formik } from "formik";
 import { nanoid } from "nanoid";
 import AWS from "aws-sdk";
 
@@ -27,7 +25,6 @@ export default function HomeFeedPostGenerator({}) {
     buttonStatus: false,
     inputValue: "",
   });
-  const [uploadPicture, { data, error, loading }] = useMutation(SINGLE_UPLOAD);
 
   const onDrop = useCallback(async ([file]) => {
     const s3 = new AWS.S3.ManagedUpload({
@@ -46,53 +43,41 @@ export default function HomeFeedPostGenerator({}) {
     });
   }, []);
 
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-  });
-
-  const handleInput = (e) => {
-    setState((prevState) => ({
-      ...prevState,
-      inputValue: e.target.value,
-    }));
-  };
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const [createPost] = useMutation(CREATE_POST, {
     update(cache, { data: { createPost } }) {
       const data = cache.readQuery({ query: GET_ALL_POSTS });
+      let newData = data.getAllPosts.concat(createPost);
       cache.writeQuery({
         query: GET_ALL_POSTS,
         data: {
-          data: data.getAllPosts.concat(createPost),
+          data: newData,
         },
       });
     },
   });
 
-  const submitForm = async (formData, resetForm) => {
+  const submitForm = async (input) => {
     await createPost({
       variables: {
         input: {
-          description: formData.description || " ",
+          description: input || "",
           picture: state.picture,
         },
       },
     });
-
     setState((prevState) => ({
       ...prevState,
       isActive: !state.isActive,
       picture: "",
     }));
-    resetForm();
   };
-
-  if (error) return <div>Error</div>;
-  if (loading) return <Spinner></Spinner>;
 
   return (
     <Wrapper>
       <OpenModalButton
+        hidden={state.isActive}
         onClick={() =>
           setState((prevState) => ({ ...prevState, isActive: !state.isActive }))
         }
@@ -101,45 +86,59 @@ export default function HomeFeedPostGenerator({}) {
       </OpenModalButton>
       {state.isActive && (
         <FormModal
-          //   encType={"multipart/form-data"}
-          initialValues={{ description: "", picture: "" }}
-          onSubmit={(values, { resetForm }) => {
-            console.log(values.description, state.picture);
-            submitForm(values, resetForm);
+          onSubmit={(e) => {
+            e.preventDefault();
+            submitForm(e.target[1].value);
           }}
         >
-          {(props) => (
-            <FormActions onSubmit={props.handleSubmit}>
-              <TopBar>
-                <h2>Create Post</h2>
-                <span
-                  onClick={() =>
-                    setState((prevState) => ({
-                      ...prevState,
-                      isActive: !state.isActive,
-                    }))
-                  }
-                >
-                  <FaTimes />
-                </span>
-              </TopBar>
-              <Dropzone {...getRootProps()}>
-                <input {...getInputProps()} />
-                <PictureInput>
-                  <FcPicture id="dropZone" />
-                  <span>Photo</span>
-                </PictureInput>
-              </Dropzone>
-              <Field
-                type="text"
-                name="description"
-                onKeyUp={handleInput}
-              ></Field>
-              <SubmitButton type="submit" disabled={false}>
-                Post
-              </SubmitButton>
-            </FormActions>
-          )}
+          <TopBar>
+            <h2>Create Post</h2>
+            <span
+              onClick={() => {
+                setState((prevState) => ({
+                  ...prevState,
+                  isActive: !state.isActive,
+                  picture: "",
+                }));
+              }}
+            >
+              <FaTimes />
+            </span>
+          </TopBar>
+          <div>
+            <Dropzone {...getRootProps()} hidden={state.picture}>
+              <input {...getInputProps()} />
+              <PictureInput>
+                <FcPicture id="dropZone" />
+                <span>Photo</span>
+              </PictureInput>
+            </Dropzone>
+            {state.picture ? (
+              <ThumbsContainer>
+                <Thumb>
+                  <ThumbInner>
+                    <Img src={state.picture} />
+                  </ThumbInner>
+                </Thumb>
+              </ThumbsContainer>
+            ) : null}
+          </div>
+          <FormActions>
+            <input
+              type="text"
+              name="description"
+              value={state.inputValue}
+              onChange={(e) =>
+                setState((prevState) => ({
+                  ...prevState,
+                  inputValue: e.target.value,
+                }))
+              }
+            />
+            <SubmitButton type="submit" disabled={state.picture ? false : true}>
+              Post
+            </SubmitButton>
+          </FormActions>
         </FormModal>
       )}
     </Wrapper>
@@ -152,6 +151,8 @@ const Wrapper = styled.div`
   margin-bottom: 1rem;
   position: relative;
   align-items: center;
+  position: relative;
+  width: 100%;
 `;
 
 const OpenModalButton = styled.button`
@@ -166,19 +167,14 @@ const OpenModalButton = styled.button`
   }
 `;
 
-const FormModal = styled(Formik)`
-  position: fixed;
+const FormModal = styled.form`
   padding: 1rem 0;
   flex-direction: column;
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: #242526;
   display: flex;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 100%;
-  max-width: 540px;
   z-index: 99999;
   border-radius: 10px;
   border: 1px solid #242526;
@@ -218,19 +214,20 @@ const TopBar = styled.div`
   }
 `;
 
-const FormActions = styled.form`
+const FormActions = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 20px;
   input {
     padding: 10px 5px;
-    border-radius: 5px;
+    border-radius: 20px;
     border: 0;
-    background-color: inherit;
+    background-color: #18191a;
     color: #e5e7ec;
     width: 100%;
-    height: 400px;
+    height: 200px;
     font-size: 30px;
     text-align: center;
 
@@ -275,7 +272,9 @@ const PictureInput = styled.div`
   border-radius: 10px;
 `;
 
-const Dropzone = styled.div``;
+const Dropzone = styled.div`
+  cursor: pointer;
+`;
 
 const SubmitButton = styled.button`
   cursor: pointer;
@@ -291,4 +290,33 @@ const SubmitButton = styled.button`
   margin-top: 2rem;
   line-height: 18px;
   ${({ disabled }) => !disabled && `background: #8ea1e1;color: #e5e7ec;`}
+`;
+
+const ThumbsContainer = styled.div`
+  display: flex;
+  margin-top: 16px;
+`;
+
+const Thumb = styled.div`
+  display: inline-flex;
+  border-radius: 2px;
+  border: 1px solid #eaeaea;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  width: 100px;
+  height: 100px;
+  padding: 4px;
+  box-sizing: border-box;
+`;
+
+const ThumbInner = styled.div`
+  display: flex;
+  min-width: 0;
+  overflow: hidden;
+`;
+
+const Img = styled.img`
+  display: block;
+  width: 100px;
+  height: 100px;
 `;

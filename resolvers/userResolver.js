@@ -32,6 +32,7 @@ const userResolver = {
       const userToBeReturned = await ctx.models.User.findOne({
         _id: args.input,
       }).populate("posts");
+      console.log(userToBeReturned);
       return userToBeReturned;
     }),
     getUsers: authenticated(async (root, args, ctx) => {
@@ -127,20 +128,12 @@ const userResolver = {
       const currentUser = await models.User.findOneAndUpdate(
         { _id: user.id },
         { $addToSet: { following: userToBeFollowed } },
-        { useFindAndModify: false, new: true },
-        function (err, res) {
-          if (err) console.log(err);
-          return res;
-        }
+        { useFindAndModify: false, new: true }
       );
 
       userToBeFollowed.updateOne(
         { $addToSet: { followers: currentUser } },
-        { useFindAndModify: false, new: true },
-        function (err, res) {
-          if (err) console.log(err);
-          return res;
-        }
+        { useFindAndModify: false, new: true }
       );
 
       return userToBeFollowed;

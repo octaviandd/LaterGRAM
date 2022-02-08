@@ -6,11 +6,11 @@ import ProfileSVG from "../../assets/svgs/ProfileSVG";
 import { Link } from "react-router-dom";
 import SettingSVG from "../../assets/svgs/SettingsSVG";
 
-export default function NavbarSettings({ id, logOut }) {
+export default function NavbarSettings({ id, logOut, activateDropdown }) {
   return (
     <MainContainter>
       <ul>
-        <li>
+        <li onClick={() => activateDropdown(false)}>
           <Link to={`/profile/${id}`}>
             <div>
               <span>
@@ -20,7 +20,7 @@ export default function NavbarSettings({ id, logOut }) {
             </div>
           </Link>
         </li>
-        <li>
+        <li onClick={() => activateDropdown(false)}>
           <div>
             <span>
               <SettingSVG />

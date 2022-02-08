@@ -20,7 +20,7 @@ const postResolver = {
   },
   Mutation: {
     createPost: authenticated(async (_, { input }, { models, user }) => {
-      const presentUser = await models.User.findOne({ _id: user.id });
+      const presentUser = await models.User.findOne({ _id: user._id });
       const post = new models.Post({
         author: presentUser,
         description: input.description,
@@ -30,6 +30,8 @@ const postResolver = {
         comments: [],
       });
 
+      console.log(post);
+
       presentUser.updateOne(
         { $addToSet: { posts: post } },
         { useFindAndModify: false, new: true },
@@ -38,7 +40,9 @@ const postResolver = {
           return res;
         }
       );
+
       post.save();
+      presentUser.save();
       return post;
     }),
     likePost: authenticated(async (_, { input }, { models, user }) => {

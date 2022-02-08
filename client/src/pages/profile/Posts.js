@@ -20,41 +20,37 @@ export default function ProfilePosts({ id }) {
 
   const { posts } = data.data;
 
+  console.log(data);
   return (
     <Wrapper>
-      <div>
-        <ImagesGrid>
-          {posts &&
-            posts.map((post) => {
-              return (
-                <img
-                  key={post._id}
-                  src={`${post.picture}`}
-                  alt={post._id}
-                ></img>
-              );
-            })}
-        </ImagesGrid>
-      </div>
+      <ImagesGrid>
+        {posts &&
+          posts.map((post) => {
+            return (
+              <img key={post._id} src={`${post.picture}`} alt={post._id}></img>
+            );
+          })}
+      </ImagesGrid>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.section`
   padding: 25px 0px;
-  max-width: 955px;
   width: 100%;
   color: #e5e7ec;
+  background-color: #18191a;
+  max-width: 955px;
 `;
 
 const ImagesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   width: 100%;
   grid-gap: 20px;
   img {
+    width: 100%;
+    max-height: 100%;
     object-fit: cover;
-    width: 300px;
-    height: 300px;
   }
 `;

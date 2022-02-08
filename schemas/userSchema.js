@@ -36,7 +36,7 @@ const userSchema = new Schema(
     },
     posts: [
       {
-        type: Schema.Types.Mixed,
+        type: Schema.Types.ObjectId,
         ref: "Post",
         required: true,
       },
