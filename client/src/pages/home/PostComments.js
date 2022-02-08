@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 import { timer } from "../../utils/Timer";
 import { Link } from "react-router-dom";
-import Comment from "./CommentComments";
+import Comment from "./Comment";
 import { GET_POST_COMMENTS } from "../../graphql/Queries";
 import { NEW_COMMENT } from "../../graphql/Mutations";
 
@@ -33,7 +33,6 @@ export default function PostComments({
         query: GET_POST_COMMENTS,
         variables: { input: id },
       });
-      console.log(data, createComment);
       cache.writeQuery({
         query: GET_POST_COMMENTS,
         variables: { input: id },

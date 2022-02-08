@@ -8,6 +8,7 @@ import Spinner from "../utils/Spinner";
 import { Link } from "react-router-dom";
 
 export default function NavbarSearchDropdown({ searchValue }) {
+  console.log(searchValue);
   const { data, loading, error } = useQuery(GET_USERS);
   if (error) return <div>errror</div>;
   if (loading) return <Spinner />;
@@ -41,7 +42,7 @@ const Wrapper = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  right: 368px;
+  right: 400px;
   top: 61px;
   max-width: 220px;
   width: 100%;

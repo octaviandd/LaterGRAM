@@ -6,10 +6,10 @@ const { authenticated } = auth;
 const postResolver = {
   Query: {
     getPost: authenticated(async (_, { input }, { models }) => {
-      const foundPost = models.Post.findOne({ _id: input })
+      const foundPost = await models.Post.findOne({ _id: input })
         .populate("author")
         .populate({ path: "comments", populate: { path: "author" } });
-      console.log("hit");
+      console.log(foundPost);
       return foundPost;
     }),
     getAllPosts: authenticated(async (_, __, { models }) => {

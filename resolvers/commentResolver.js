@@ -20,7 +20,8 @@ const commentResolver = {
       const parentPost = await models.Post.findOne({
         _id: input._id,
       });
-      const comment = await new models.Comment({
+
+      const comment = new models.Comment({
         content: input.content,
         author: parentUser,
         parentPost: parentPost,
@@ -28,13 +29,15 @@ const commentResolver = {
         likes: [],
       });
 
-      await comment.save();
-
-      const findComment = await models.Comment.findOne({ _id: comment._id });
       parentPost.updateOne(
-        { $addToSet: { comments: findComment } },
-        { useFindAndModify: false, new: true }
+        { $addToSet: { comments: comment } },
+        { useFindAndModify: false, new: true },
+        (res, err) => {
+          console.log(res, err);
+        }
       );
+
+      comment.save();
       parentPost.save();
       return comment;
     }),

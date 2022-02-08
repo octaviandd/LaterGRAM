@@ -1,11 +1,11 @@
 /** @format */
 
-import React, { ReactElement, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
-import Navbar from "../../navbar/Navbar";
 import { timer } from "../../utils/Timer";
-import Comment from "../home/CommentComments";
+import Comment from "../home/Comment";
+import { v4 as uuidv4 } from "uuid";
 import {
   GET_POST,
   GET_CURRENT_USER,
@@ -77,7 +77,7 @@ export default function Post({}) {
             </PostDescription>
             <CommentsList>
               {data.getPost.comments.map((comment) => {
-                return <Comment comment={comment} />;
+                return <Comment comment={comment} key={uuidv4()} />;
               })}
             </CommentsList>
           </RightColumn>
@@ -187,9 +187,7 @@ const Timer = styled.time`
 `;
 
 const CommentsList = styled.div`
-  height: 350px;
-  overflow: scroll;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid #dbdbdb;
 `;

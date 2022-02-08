@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { timer } from "../../utils/Timer";
 
-export default function HomeFeedPostCommentsComment({ comment }) {
+export default function Comment({ comment }) {
   const timerDifference = timer(Date.now(), Number(comment.createdAt));
   return (
     <Wrapper>
