@@ -30,8 +30,6 @@ const postResolver = {
         comments: [],
       });
 
-      console.log(post);
-
       presentUser.updateOne(
         { $addToSet: { posts: post } },
         { useFindAndModify: false, new: true },

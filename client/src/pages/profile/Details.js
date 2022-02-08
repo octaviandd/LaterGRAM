@@ -1,7 +1,7 @@
 /** @format */
 
 import { useQuery, useMutation } from "@apollo/client";
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import { GET_CURRENT_USER, GET_USER_BY_ID } from "../../graphql/Queries";
 import Spinner from "../../utils/Spinner";

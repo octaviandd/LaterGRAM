@@ -17,6 +17,8 @@ export default function HomeFriends({}) {
 
   const { _id, username, following, avatar } = data.data;
 
+  console.log(usersData);
+
   return (
     <Wrapper>
       <Profile>
@@ -33,7 +35,7 @@ export default function HomeFriends({}) {
           <a href="#">See all</a>
         </div>
         {usersData &&
-          usersData.data
+          usersData.getUsers
             .filter(
               (user) =>
                 user._id !== _id &&

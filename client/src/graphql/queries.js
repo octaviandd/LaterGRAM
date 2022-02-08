@@ -49,7 +49,7 @@ export const GET_CURRENT_USER = gql`
 
 export const GET_USERS = gql`
   query GetUsers {
-    data: getUsers {
+    getUsers {
       _id
       name
       username

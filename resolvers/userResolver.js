@@ -32,11 +32,11 @@ const userResolver = {
       const userToBeReturned = await ctx.models.User.findOne({
         _id: args.input,
       }).populate("posts");
-      console.log(userToBeReturned);
       return userToBeReturned;
     }),
     getUsers: authenticated(async (root, args, ctx) => {
       const users = await ctx.models.User.find({});
+      console.log(users);
       return users;
     }),
   },
@@ -72,6 +72,7 @@ const userResolver = {
       return { user, token };
     },
     loginUser: async (root, args, ctx) => {
+      console.log("here");
       const { models, createToken, res } = ctx;
       const { email, password } = args.input;
 
@@ -92,7 +93,6 @@ const userResolver = {
         { avatar: input },
         { useFindAndModify: false, new: true }
       );
-      console.log(currentUser);
 
       return currentUser;
     }),

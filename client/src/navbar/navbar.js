@@ -35,7 +35,7 @@ export default function Navbar({}) {
 
   const logOut = () => {
     window.localStorage.clear();
-    navigate("/", { replace: true });
+    window.location.reload();
   };
 
   useEffect(() => {
