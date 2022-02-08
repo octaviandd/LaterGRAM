@@ -17,7 +17,7 @@ const commentResolver = {
   },
   Mutation: {
     createComment: authenticated(async (_, { input }, { models, user }) => {
-      const parentUser = await models.User.findOne({ _id: user.id });
+      const parentUser = await models.User.findOne({ _id: user._id });
       const parentPost = await models.Post.findOne({
         _id: input._id,
       });
@@ -34,12 +34,9 @@ const commentResolver = {
       const findComment = await models.Comment.findOne({ _id: comment._id });
       parentPost.updateOne(
         { $addToSet: { comments: findComment } },
-        { useFindAndModify: false, new: true },
-        function (err, res) {
-          if (err) console.log(err);
-          return res;
-        }
+        { useFindAndModify: false, new: true }
       );
+      parentPost.save();
       return comment;
     }),
   },

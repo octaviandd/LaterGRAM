@@ -32,11 +32,7 @@ const postResolver = {
 
       presentUser.updateOne(
         { $addToSet: { posts: post } },
-        { useFindAndModify: false, new: true },
-        function (err, res) {
-          if (err) console.log(err);
-          return res;
-        }
+        { useFindAndModify: false, new: true }
       );
 
       post.save();
@@ -44,48 +40,36 @@ const postResolver = {
       return post;
     }),
     likePost: authenticated(async (_, { input }, { models, user }) => {
-      const currentUser = await models.User.findOne({ _id: user.id });
+      const currentUser = await models.User.findOne({ _id: user._id });
       const postToBeLiked = await models.Post.findOneAndUpdate(
         { _id: input },
         { $addToSet: { likes: currentUser } },
-        { useFindAndModify: false, new: true },
-        (err, res) => {
-          if (err) console.log(err);
-          return res;
-        }
+        { useFindAndModify: false, new: true }
       );
 
       currentUser.updateOne(
         { $addToSet: { likedPosts: postToBeLiked } },
-        { useFindAndModify: false, new: true },
-        function (err, res) {
-          if (err) console.log(err);
-          return res;
-        }
+        { useFindAndModify: false, new: true }
       );
 
+      currentUser.save();
+      postToBeLiked.save();
       return postToBeLiked;
     }),
     unlikePost: authenticated(async (_, { input }, { models, user }) => {
-      const currentUser = await models.User.findOne({ _id: user.id });
+      const currentUser = await models.User.findOne({ _id: user._id });
       const postToBeUnliked = await models.Post.findOneAndUpdate(
         { _id: input },
         { $pull: { likes: currentUser._id } },
-        { useFindAndModify: false, new: true },
-        function (err, res) {
-          if (err) console.log(err);
-          return res;
-        }
+        { useFindAndModify: false, new: true }
       );
       await currentUser.updateOne(
         { $pull: { likedPosts: postToBeUnliked._id } },
-        { useFindAndModify: false, new: true },
-        function (err, res) {
-          if (err) console.log(err);
-          return res;
-        }
+        { useFindAndModify: false, new: true }
       );
 
+      currentUser.save();
+      postToBeUnliked.save();
       return postToBeUnliked;
     }),
   },

@@ -25,8 +25,6 @@ export default function HomeFeed({}) {
   const { data, error, loading } = useQuery(GET_ALL_POSTS);
   const { data: currentUser } = useQuery(GET_CURRENT_USER);
 
-  console.log(data);
-
   if (error) return <div>errror</div>;
   if (loading) return <Spinner />;
 

@@ -16,7 +16,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import Spinner from "../../utils/Spinner";
 
 export default function HomeFeedPost({ post }) {
-  const [state, updateState] = useState();
+  const [currentPostLikes, setCurrentPostLikes] = useState(0);
 
   const {
     data: data2,
@@ -30,23 +30,41 @@ export default function HomeFeedPost({ post }) {
       cache.writeQuery({
         query: GET_CURRENT_USER,
         data: {
-          results: { likedPosts: [likePost, ...data.data.likedPosts] },
+          data: {
+            ...data.data,
+            likedPosts: data.data.likedPosts.concat(likePost),
+          },
         },
       });
+    },
+    onCompleted(data) {
+      setCurrentPostLikes(data.likePost.likes.length);
     },
   });
 
-  const [unlikePost] = useMutation(UNLIKE_POST, {
-    update(cache, { data: { unlikePost } }) {
-      const data = cache.readQuery({ query: GET_CURRENT_USER });
-      cache.writeQuery({
-        query: GET_CURRENT_USER,
-        data: {
-          results: { likedPosts: [unlikePost, ...data.data.likedPosts] },
-        },
-      });
-    },
-  });
+  const [unlikePost, { error: error2, loading: loading2 }] = useMutation(
+    UNLIKE_POST,
+    {
+      update(cache, { data: { unlikePost } }) {
+        const data = cache.readQuery({ query: GET_CURRENT_USER });
+        console.log(unlikePost);
+        cache.writeQuery({
+          query: GET_CURRENT_USER,
+          data: {
+            data: {
+              ...data.data,
+              likedPosts: [
+                data.data.likedPosts.filter((id) => id === unlikePost._id),
+              ],
+            },
+          },
+        });
+      },
+      onCompleted(data) {
+        setCurrentPostLikes(data.unlikePost.likes.length);
+      },
+    }
+  );
 
   // COMPONENT METHODS
   const likePostMethod = async () => {
@@ -56,9 +74,6 @@ export default function HomeFeedPost({ post }) {
   const unlikePostMethod = async () => {
     await unlikePost({ variables: { input: post._id } });
   };
-
-  if (error) return <div>errror</div>;
-  if (loading) return <Spinner />;
 
   return (
     <Wrapper>
@@ -96,11 +111,17 @@ export default function HomeFeedPost({ post }) {
         </ButtonsContainer>
         <LikesContainer>
           <a href="">
-            {post && post.likes.length > 0 && (
+            {!currentPostLikes && post && post.likes.length > 0 ? (
               <span>
                 {post.likes.length === 1
                   ? `${post.likes.length} like`
                   : `${post.likes.length} likes`}
+              </span>
+            ) : (
+              <span>
+                {currentPostLikes === 1
+                  ? `${currentPostLikes} like`
+                  : `${currentPostLikes} likes`}
               </span>
             )}
           </a>

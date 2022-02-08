@@ -36,7 +36,6 @@ const userResolver = {
     }),
     getUsers: authenticated(async (root, args, ctx) => {
       const users = await ctx.models.User.find({});
-      console.log(users);
       return users;
     }),
   },
@@ -72,7 +71,6 @@ const userResolver = {
       return { user, token };
     },
     loginUser: async (root, args, ctx) => {
-      console.log("here");
       const { models, createToken, res } = ctx;
       const { email, password } = args.input;
 
@@ -93,7 +91,8 @@ const userResolver = {
         { avatar: input },
         { useFindAndModify: false, new: true }
       );
-
+      currentUser.save();
+      console.log(currentUser);
       return currentUser;
     }),
 
@@ -115,11 +114,7 @@ const userResolver = {
       const findComment = await models.Comment.findOne({ _id: comment._id });
       parentPost.updateOne(
         { $addToSet: { comments: findComment } },
-        { useFindAndModify: false, new: true },
-        function (err, res) {
-          if (err) console.log(err);
-          return res;
-        }
+        { useFindAndModify: false, new: true }
       );
       return comment;
     }),
@@ -130,7 +125,6 @@ const userResolver = {
         { $addToSet: { following: userToBeFollowed } },
         { useFindAndModify: false, new: true }
       );
-      console.log({ userToBeFollowed, currentUser });
 
       userToBeFollowed.updateOne(
         { $addToSet: { followers: currentUser } },

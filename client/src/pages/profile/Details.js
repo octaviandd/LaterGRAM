@@ -42,6 +42,7 @@ export default function ProfileDetails() {
     CHANGE_AVATAR,
     {
       update(cache, { data: { changeAvatar } }) {
+        console.log({ changeAvatar });
         const data = cache.readQuery({ query: GET_CURRENT_USER });
         cache.writeQuery({
           query: GET_CURRENT_USER,
@@ -64,6 +65,7 @@ export default function ProfileDetails() {
       changeAvatar({
         variables: { input: res.Location },
       });
+
       setActive(false);
     });
   }, []);

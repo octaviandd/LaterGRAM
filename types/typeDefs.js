@@ -59,7 +59,7 @@ const typeDefs = gql`
     createUser(input: RegisterInput!): AuthUser!
     loginUser(input: LoginInput!): AuthUser!
     createComment(input: NewCommentInput!): Comment!
-    likePost(input: ID!): Post
+    likePost(input: ID!): Post!
     likeComment(input: ID!): Comment!
     followUser(input: ID!): User!
     unlikePost(input: ID!): Post!

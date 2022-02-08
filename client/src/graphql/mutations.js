@@ -210,6 +210,9 @@ export const LIKE_POST = gql`
     likePost(input: $input) {
       _id
       createdAt
+      likes {
+        _id
+      }
     }
   }
 `;
@@ -218,6 +221,10 @@ export const UNLIKE_POST = gql`
   mutation UnlikePost($input: ID!) {
     unlikePost(input: $input) {
       _id
+      createdAt
+      likes {
+        _id
+      }
     }
   }
 `;
