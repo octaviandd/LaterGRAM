@@ -2,10 +2,8 @@
 
 import React, { ReactElement, useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "../../navbar/Navbar";
-import Picture from "../../../assets/carousel4.jpg";
-import Avatar from "../../../assets/profileimg.jpg";
 import { timer } from "../../utils/Timer";
 import Comment from "../home/CommentComments";
 import {
@@ -17,17 +15,17 @@ import { LIKE_POST, UNLIKE_POST, NEW_COMMENT } from "../../graphql/Mutations";
 import { useQuery, useMutation } from "@apollo/client";
 import Spinner from "../../utils/Spinner";
 
-export default function Post({
-  match: {
-    params: { id },
-  },
-}) {
+export default function Post({}) {
+  const { id } = useParams();
   const [state, setState] = useState({
     inputValue: "",
     isInputActive: false,
   });
+  console.log(id);
 
-  const { data, loading } = useQuery(GET_POST, { variables: { input: id } });
+  const { data, loading, error } = useQuery(GET_POST, {
+    variables: { input: id },
+  });
 
   useEffect(() => {
     if (state.inputValue !== "") {
@@ -42,52 +40,53 @@ export default function Post({
       }));
     }
   }, [state.inputValue]);
-
-  const timerDifference = timer(Date.now(), Number(data.createdAt));
+  console.log(data);
 
   if (loading) return <Spinner />;
 
-  return (
-    <>
-      <Navbar />
+  if (data) {
+    const timerDifference = timer(Date.now(), Number(data.getPost.createdAt));
+    return (
       <Wrapper>
         <PostModal>
           <LeftColumn>
-            <img src={`${data && data.data.picture}`}></img>
+            <img src={`${data.getPost.picture}`}></img>
           </LeftColumn>
           <RightColumn>
             <UserProfile>
-              <img src={`${data && data.data.author.avatar}`}></img>
-              <p>{data && data.data.author.username}</p>
+              <img src={`${data.getPost.author.avatar}`}></img>
+              <p>{data.getPost.author.username}</p>
             </UserProfile>
             <PostDescription>
               <div>
                 <div>
-                  <img src={`${data && data.data.author.avatar}`}></img>
+                  <img src={`${data.getPost.author.avatar}`}></img>
                 </div>
                 <div>
                   <div>
-                    <Link to={`${data.data.author._id}`}>
-                      {data && data.data.author.username}
+                    <Link to={`${data.getPost.author._id}`}>
+                      {data.getPost.author.username}
                     </Link>
-                    <span>{data && data.data.description}</span>
+                    <span>{data.getPost.description}</span>
                   </div>
                   <div>
-                    <Timer>{timerDifference && timerDifference}</Timer>
+                    <Timer>{timerDifference}</Timer>
                   </div>
                 </div>
               </div>
             </PostDescription>
             <CommentsList>
-              {data.data.comments.map((comment) => {
+              {data.getPost.comments.map((comment) => {
                 return <Comment comment={comment} />;
               })}
             </CommentsList>
           </RightColumn>
         </PostModal>
       </Wrapper>
-    </>
-  );
+    );
+  } else {
+    return <Spinner />;
+  }
 }
 
 const PostModal = styled.div`

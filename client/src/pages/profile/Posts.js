@@ -44,7 +44,7 @@ const Wrapper = styled.section`
 
 const ImagesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
   width: 100%;
   grid-gap: 20px;
   img {

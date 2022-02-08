@@ -4,15 +4,13 @@ import React, { ReactElement } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { timer } from "../../utils/Timer";
-import Avatar from "../../../assets/profileimg.jpg";
 
 export default function HomeFeedPostCommentsComment({ comment }) {
   const timerDifference = timer(Date.now(), Number(comment.createdAt));
-
   return (
     <Wrapper>
       <CommentLogo>
-        <img src={Avatar}></img>
+        <img src={comment.author.avatar}></img>
       </CommentLogo>
       <CommentSection>
         <div>

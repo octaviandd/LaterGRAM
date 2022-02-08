@@ -128,12 +128,13 @@ export const GET_ALL_POSTS = gql`
 
 export const GET_POST_COMMENTS = gql`
   query GetPostComments($input: ID!) {
-    results: getPostComments(input: $input) {
+    getPostComments(input: $input) {
       _id
       content
       author {
         _id
         username
+        avatar
       }
       parentPost {
         _id
@@ -148,7 +149,7 @@ export const GET_POST_COMMENTS = gql`
 
 export const GET_POST = gql`
   query GetPost($input: ID!) {
-    results: getPost(input: $input) {
+    getPost(input: $input) {
       _id
       picture
       createdAt

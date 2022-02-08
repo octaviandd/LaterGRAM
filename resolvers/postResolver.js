@@ -9,6 +9,7 @@ const postResolver = {
       const foundPost = models.Post.findOne({ _id: input })
         .populate("author")
         .populate({ path: "comments", populate: { path: "author" } });
+      console.log("hit");
       return foundPost;
     }),
     getAllPosts: authenticated(async (_, __, { models }) => {

@@ -15,7 +15,7 @@ export default function NavbarSearchDropdown({ searchValue }) {
   return (
     <Wrapper>
       {data &&
-        data.data
+        data.getUsers
           .slice(0, 20)
           .filter((user) => user.username.includes(searchValue))
           .map((user) => {

@@ -144,6 +144,12 @@ export const NEW_COMMENT = gql`
       parentPost {
         _id
       }
+      author {
+        _id
+        username
+        avatar
+        name
+      }
       createdAt
       likes {
         _id

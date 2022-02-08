@@ -11,7 +11,6 @@ const commentResolver = {
       const comments = allComments.filter(
         (comment) => comment.parentPost._id.toString() === input
       );
-
       return comments;
     }),
   },

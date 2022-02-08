@@ -33,10 +33,14 @@ export default function PostComments({
         query: GET_POST_COMMENTS,
         variables: { input: id },
       });
+      console.log(data, createComment);
       cache.writeQuery({
         query: GET_POST_COMMENTS,
         variables: { input: id },
-        data: { results: [createComment, ...data.results] },
+        data: {
+          ...data,
+          getPostComments: [createComment, ...data.getPostComments],
+        },
       });
     },
   });
@@ -75,7 +79,7 @@ export default function PostComments({
           <span>{description && description}</span>
         </div>
         {data &&
-          data.results.map((comment) => {
+          data.getPostComments.map((comment) => {
             return <Comment comment={comment} key={uuidv4()}></Comment>;
           })}
         <Timer>{timerDifference && timerDifference}</Timer>
