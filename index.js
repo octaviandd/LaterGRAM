@@ -14,6 +14,8 @@ const typeDefs = require("./types/typeDefs");
 const auth = require("./auth");
 const { createToken, getUserFromToken } = auth;
 
+const port = process.env.PORT || 4000;
+
 const resolvers = merge({}, userResolver, postResolver, commentResolver);
 let models = { User, Comment, Post };
 
@@ -76,8 +78,8 @@ const startServer = async () => {
     app.use(express.static("client/build"));
   }
 
-  app.listen({ port: 4000 }, (port) => {
-    console.log("running");
+  app.listen(port, () => {
+    console.log(port);
   });
 };
 
