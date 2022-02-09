@@ -10,6 +10,7 @@ import { GET_ALL_POSTS } from "../../graphql/Queries";
 import { useDropzone } from "react-dropzone";
 import { nanoid } from "nanoid";
 import AWS from "aws-sdk";
+import Spinner from "../../utils/Spinner";
 
 AWS.config.update({
   region: "eu-central-1",
@@ -25,8 +26,10 @@ export default function HomeFeedPostGenerator({}) {
     buttonStatus: false,
     inputValue: "",
   });
+  const [loadingUpload, setLoadingUpload] = useState(false);
 
   const onDrop = useCallback(async ([file]) => {
+    setLoadingUpload(true);
     const s3 = new AWS.S3.ManagedUpload({
       params: {
         Bucket: "latergram",
@@ -40,19 +43,19 @@ export default function HomeFeedPostGenerator({}) {
         ...prevState,
         picture: res.Location,
       }));
+      setLoadingUpload(false);
     });
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-  const [createPost] = useMutation(CREATE_POST, {
+  const [createPost, { loading }] = useMutation(CREATE_POST, {
     update(cache, { data: { createPost } }) {
       const data = cache.readQuery({ query: GET_ALL_POSTS });
-      console.log({ data }, { createPost });
       cache.writeQuery({
         query: GET_ALL_POSTS,
         data: {
-          data: { getAllPosts: [createPost, ...data.getAllPosts] },
+          getAllPosts: [createPost, ...data.getAllPosts],
         },
       });
     },
@@ -71,6 +74,7 @@ export default function HomeFeedPostGenerator({}) {
       ...prevState,
       isActive: !state.isActive,
       picture: "",
+      inputValue: "",
     }));
   };
 
@@ -106,6 +110,7 @@ export default function HomeFeedPostGenerator({}) {
             </span>
           </TopBar>
           <div>
+            {loadingUpload && <Spinner />}
             <Dropzone {...getRootProps()} hidden={state.picture}>
               <input {...getInputProps()} />
               <PictureInput>
@@ -113,7 +118,7 @@ export default function HomeFeedPostGenerator({}) {
                 <span>Photo</span>
               </PictureInput>
             </Dropzone>
-            {state.picture ? (
+            {state.picture && !loadingUpload ? (
               <ThumbsContainer>
                 <Thumb>
                   <ThumbInner>

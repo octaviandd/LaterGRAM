@@ -16,11 +16,7 @@ import Spinner from "../../utils/Spinner";
 export default function HomeFeedPost({ post }) {
   const [currentPostLikes, setCurrentPostLikes] = useState(0);
 
-  const {
-    data: data2,
-    loading: currentLoading,
-    error: currentError,
-  } = useQuery(GET_CURRENT_USER);
+  const { data: data2 } = useQuery(GET_CURRENT_USER);
 
   const [likePost, { error, loading }] = useMutation(LIKE_POST, {
     update(cache, { data: { likePost } }) {
@@ -40,29 +36,25 @@ export default function HomeFeedPost({ post }) {
     },
   });
 
-  const [unlikePost, { error: error2, loading: loading2 }] = useMutation(
-    UNLIKE_POST,
-    {
-      update(cache, { data: { unlikePost } }) {
-        const data = cache.readQuery({ query: GET_CURRENT_USER });
-        console.log(unlikePost);
-        cache.writeQuery({
-          query: GET_CURRENT_USER,
+  const [unlikePost] = useMutation(UNLIKE_POST, {
+    update(cache, { data: { unlikePost } }) {
+      const data = cache.readQuery({ query: GET_CURRENT_USER });
+      cache.writeQuery({
+        query: GET_CURRENT_USER,
+        data: {
           data: {
-            data: {
-              ...data.data,
-              likedPosts: [
-                data.data.likedPosts.filter((id) => id === unlikePost._id),
-              ],
-            },
+            ...data.data,
+            likedPosts: [
+              data.data.likedPosts.filter((id) => id === unlikePost._id),
+            ],
           },
-        });
-      },
-      onCompleted(data) {
-        setCurrentPostLikes(data.unlikePost.likes.length);
-      },
-    }
-  );
+        },
+      });
+    },
+    onCompleted(data) {
+      setCurrentPostLikes(data.unlikePost.likes.length);
+    },
+  });
 
   // COMPONENT METHODS
   const likePostMethod = async () => {

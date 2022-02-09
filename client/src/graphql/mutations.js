@@ -256,6 +256,9 @@ export const LIKE_POST = gql`
       likes {
         _id
       }
+      author {
+        _id
+      }
     }
   }
 `;
@@ -266,6 +269,9 @@ export const UNLIKE_POST = gql`
       _id
       createdAt
       likes {
+        _id
+      }
+      author {
         _id
       }
     }
