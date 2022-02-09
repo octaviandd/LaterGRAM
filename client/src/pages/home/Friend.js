@@ -21,7 +21,7 @@ export default function HomeFriendsFriend({ user }) {
         data: {
           data: {
             ...data.data,
-            following: [followUser, ...data.data.following],
+            following: data.data.following.concat(followUser),
           },
         },
       });

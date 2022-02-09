@@ -207,6 +207,43 @@ export const UNFOLLOW_USER = gql`
   mutation UnfollowUser($input: ID!) {
     unfollowUser(input: $input) {
       _id
+      name
+      email
+      username
+      createdAt
+      avatar
+      posts {
+        _id
+      }
+      likedPosts {
+        _id
+      }
+      following {
+        _id
+        username
+        posts {
+          _id
+          picture
+          description
+          likes {
+            _id
+          }
+          author {
+            _id
+          }
+          comments {
+            _id
+            content
+            author {
+              _id
+              username
+            }
+          }
+        }
+      }
+      followers {
+        _id
+      }
     }
   }
 `;

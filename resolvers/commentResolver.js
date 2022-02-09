@@ -29,7 +29,7 @@ const commentResolver = {
         likes: [],
       });
 
-      parentPost.updateOne(
+      await parentPost.updateOne(
         { $addToSet: { comments: comment } },
         { useFindAndModify: false, new: true },
         (res, err) => {

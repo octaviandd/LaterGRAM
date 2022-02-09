@@ -20,14 +20,14 @@ export default function NavbarSettings({ id, logOut, activateDropdown }) {
             </div>
           </Link>
         </li>
-        <li onClick={() => activateDropdown(false)}>
+        {/* <li onClick={() => activateDropdown(false)}>
           <div>
             <span>
               <SettingSVG />
             </span>
             <span>Settings</span>
           </div>
-        </li>
+        </li> */}
         <li>
           <button onClick={() => logOut()}>
             <div>Log Out</div>
@@ -95,7 +95,7 @@ const MainContainter = styled.div`
       }
     }
 
-    > li:nth-of-type(3) {
+    > li:nth-of-type(2) {
       border-top: 1px solid #dbdbdb;
       padding-top: 12.5px;
       padding-bottom: 5px;

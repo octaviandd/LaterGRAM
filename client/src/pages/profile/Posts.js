@@ -15,6 +15,8 @@ export default function ProfilePosts({ id }) {
     variables: { input: id },
   });
 
+  console.log(data);
+
   if (error) return <div>error</div>;
   if (loading) return <Spinner></Spinner>;
 

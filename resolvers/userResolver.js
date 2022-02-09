@@ -26,6 +26,7 @@ const userResolver = {
           path: "following",
         })
         .populate("posts");
+      console.log(presentUser);
       return presentUser;
     }),
     getUserById: authenticated(async (root, args, ctx) => {
@@ -91,8 +92,7 @@ const userResolver = {
         { avatar: input },
         { useFindAndModify: false, new: true }
       );
-      currentUser.save();
-      console.log(currentUser);
+      await currentUser.save();
       return currentUser;
     }),
 
@@ -112,7 +112,7 @@ const userResolver = {
       await comment.save();
 
       const findComment = await models.Comment.findOne({ _id: comment._id });
-      parentPost.updateOne(
+      await parentPost.updateOne(
         { $addToSet: { comments: findComment } },
         { useFindAndModify: false, new: true }
       );
@@ -126,7 +126,7 @@ const userResolver = {
         { useFindAndModify: false, new: true }
       );
 
-      userToBeFollowed.updateOne(
+      await userToBeFollowed.updateOne(
         { $addToSet: { followers: currentUser } },
         { useFindAndModify: false, new: true }
       );
@@ -142,7 +142,7 @@ const userResolver = {
         { $pull: { following: userToBeUnfollowed._id } },
         { useFindAndModify: false, new: true }
       );
-      userToBeUnfollowed.updateOne(
+      await userToBeUnfollowed.updateOne(
         { $pull: { followers: currentUser._id } },
         { useFindAndModify: false, new: true }
       );

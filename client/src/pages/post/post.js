@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
 import { timer } from "../../utils/Timer";
-import Comment from "../home/Comment";
+import Comment from "./Comment";
 import { v4 as uuidv4 } from "uuid";
 import {
   GET_POST,
@@ -118,7 +118,7 @@ const RightColumn = styled.div`
   flex-direction: column;
   height: 600px;
   width: 300px;
-  background: #242526;
+  background: #fff;
 `;
 
 const UserProfile = styled.div`
@@ -127,7 +127,8 @@ const UserProfile = styled.div`
   border-bottom: 1px solid #dbdbdb;
   padding: 15px 15px;
   align-items: center;
-  color: whitesmoke;
+  color: ${(props) => props.theme.colors.textDefault};
+
   img {
     width: 32px;
     height: 32px;
@@ -161,11 +162,11 @@ const PostDescription = styled.div`
         word-wrap: break-word;
         margin-right: 4px;
         text-decoration: none;
-        color: whitesmoke;
+        color: ${(props) => props.theme.colors.textDefault};
       }
       span {
         word-wrap: break-word;
-        color: whitesmoke;
+        color: ${(props) => props.theme.colors.textDefault};
       }
     }
   }
@@ -183,7 +184,7 @@ const Timer = styled.time`
   line-height: 18px;
   text-transform: uppercase;
   margin-bottom: 4px;
-  color: whitesmoke;
+  color: ${(props) => props.theme.colors.textDefault};
 `;
 
 const CommentsList = styled.div`

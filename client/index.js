@@ -15,7 +15,7 @@ import { setContext } from "@apollo/client/link/context";
 import Theme from "./Theme.jsx";
 
 const link = createUploadLink({
-  uri: "https://laterrgram.herokuapp.com/graphql",
+  uri: "http://localhost:4000/graphql",
 });
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("token");

@@ -31,7 +31,7 @@ const postResolver = {
         comments: [],
       });
 
-      presentUser.updateOne(
+      await presentUser.updateOne(
         { $addToSet: { posts: post } },
         { useFindAndModify: false, new: true }
       );
@@ -48,10 +48,12 @@ const postResolver = {
         { useFindAndModify: false, new: true }
       );
 
-      currentUser.updateOne(
+      await currentUser.updateOne(
         { $addToSet: { likedPosts: postToBeLiked } },
         { useFindAndModify: false, new: true }
       );
+
+      console.log(currentUser, postToBeLiked);
 
       currentUser.save();
       postToBeLiked.save();

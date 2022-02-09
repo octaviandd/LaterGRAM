@@ -5,8 +5,7 @@ import React, { ReactElement } from "react";
 export default function LikedSVG({}) {
   return (
     <svg
-      ariaLabel="Unlike"
-      class="_8-yf5 "
+      aria-label="Unlike"
       color="#ed4956"
       fill="#ed4956"
       height="24"
