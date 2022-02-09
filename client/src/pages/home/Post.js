@@ -156,14 +156,8 @@ const Wrapper = styled.div`
 `;
 
 const UserDetails = styled.div`
-  background-color: #242526;
   height: 60px;
   width: 100%;
-  border-left: 1px solid #201d1e;
-  border-right: 1px solid #201d1e;
-  border-top: 1px solid #201d1e;
-  border-top-right-radius: 6px;
-  border-top-left-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -183,7 +177,8 @@ const UserDetails = styled.div`
       height: 60px;
       align-items: center;
       text-decoration: none;
-      color: #e5e7ec;
+      font-weight: 600;
+      color: #262626;
       img {
         margin-right: 15px;
         border-radius: 50%;
@@ -202,9 +197,6 @@ const PostImage = styled.div`
   display: flex;
   width: 100%;
   min-height: 500px;
-  background-color: #242526;
-  border-left: 0.5px solid #201d1e;
-  border-right: 0.5px solid #201d1e;
 
   img {
     width: 100%;
@@ -214,17 +206,12 @@ const PostImage = styled.div`
 
 const PostOptions = styled.div`
   display: flex;
-  background-color: #242526;
   flex-direction: column;
   align-items: center;
   width: 100%;
   padding-top: 5px;
-  border-right: 1px solid #201d1e;
-  border-left: 1px solid #201d1e;
-  border-bottom: 1px solid #201d1e;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
   position: relative;
+  color: ${(props) => props.theme.colors.textDefault};
 `;
 
 const ButtonsContainer = styled.div`
@@ -238,14 +225,11 @@ const ButtonsContainer = styled.div`
     display: flex;
     justify-content: space-around;
     button {
+      width: 40px;
+      height: 40px;
       cursor: pointer;
       background-color: inherit;
       border: none;
-    }
-
-    button:nth-of-type(2),
-    button:nth-of-type(1) {
-      margin-right: 10px;
     }
   }
 `;
@@ -261,12 +245,10 @@ const LikesContainer = styled.div`
     line-height: 18px;
     font-weight: 800;
     text-decoration: none;
-    color: #e5e7ec;
+    color: ${(props) => props.theme.colors.textDefault};
   }
 `;
 
-const LikedButton = styled.button`
-  background-color: #c609ec;
-`;
+const LikedButton = styled.button``;
 
 const NotLikedButton = styled.button``;

@@ -6,7 +6,7 @@ export default function SettingsSVG({}) {
   return (
     <svg
       aria-label="Settings"
-      fill="#262626"
+      fill="#4395FD"
       height="16"
       viewBox="0 0 32 32"
       width="16"

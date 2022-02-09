@@ -351,7 +351,7 @@ const EmailLegend = styled(TextLegend)`
 
 const SubmitButton = styled.button`
   width: 100%;
-  background-color: #ff6767;
+  background-color: ${(props) => props.theme.colors.buttonPrimary};
   font-size: 14px;
   color: #fff;
   font-weight: 600;

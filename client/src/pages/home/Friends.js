@@ -55,8 +55,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   position: fixed;
-  height: 100vh;
   width: 293px;
+  color: ${(props) => props.theme.colors.textDefault};
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  border-radius: 10px;
+  padding: 10px;
 `;
 
 const Profile = styled.div`
@@ -75,8 +78,8 @@ const Profile = styled.div`
 
   a {
     text-decoration: none;
-    color: #e5e7ec;
     font-weight: bold;
+    color: ${(props) => props.theme.colors.textDefault};
   }
 `;
 
@@ -99,15 +102,14 @@ const Suggestions = styled.div`
     p {
       font-size: 14px;
       line-height: 18px;
-      color: #e5e7ec;
       font-weight: bold;
     }
     a {
       font-size: 14px;
       line-height: 18px;
       text-decoration: none;
-      color: #e5e7ec;
       font-weight: bold;
+      color: ${(props) => props.theme.colors.textDefault};
     }
   }
 `;

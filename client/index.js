@@ -12,6 +12,15 @@ import {
 } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
 import { setContext } from "@apollo/client/link/context";
+import Theme from "./Theme.jsx";
+
+let uri = "";
+
+if (process.env.NODE_ENV === "production") {
+  uri = "https://laterrgram.herokuapp.com/graphql";
+} else {
+  uri = "http://localhost:4000/graphql";
+}
 
 const link = createUploadLink({
   uri: "http://localhost:4000/graphql",
@@ -34,7 +43,9 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App></App>
+      <Theme>
+        <App></App>
+      </Theme>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")

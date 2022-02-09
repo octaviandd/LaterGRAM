@@ -23,9 +23,11 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 10px 15px;
   border-radius: 10px;
+  width: 100%;
   p {
     text-align: center;
     color: #e5e7ec;
+    font-weight: 700;
   }
   a {
     margin-top: 1rem;

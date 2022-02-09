@@ -62,6 +62,7 @@ const MainContainter = styled.div`
       }
     }
     li {
+      cursor: pointer;
       list-style: none;
       display: flex;
       align-items: center;
@@ -71,7 +72,7 @@ const MainContainter = styled.div`
       color: whitesmoke;
 
       &:hover {
-        background-color: #c609ec;
+        background-color: ${(props) => props.theme.colors.buttonPrimary};
       }
 
       a {
@@ -103,7 +104,6 @@ const MainContainter = styled.div`
         background-color: transparent;
         border: none;
         font-size: 16px;
-        cursor: pointer;
         color: whitesmoke;
       }
     }

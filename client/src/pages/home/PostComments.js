@@ -73,7 +73,7 @@ export default function PostComments({
   return (
     <Wrapper>
       <div>
-        <div>
+        <div style={{ paddingLeft: "14px" }}>
           {username && <Link to={`/profile/${author}`}>{username}</Link>}
           <span>{description && description}</span>
         </div>
@@ -103,7 +103,9 @@ export default function PostComments({
             <WriteCommentSpan active={state.isInputActive}>
               Add a comment..
             </WriteCommentSpan>
-            <button type="submit">Post</button>
+            <SubmitButton type="submit" disabled={state.inputValue === ""}>
+              Post
+            </SubmitButton>
           </form>
         </AddCommentsContainer>
       </div>
@@ -115,20 +117,19 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding-top: 10px;
 
   & > div:nth-of-type(1) {
-    padding-left: 10px;
     display: flex;
     flex-direction: column;
-    margin-bottom: 4px;
     font-size: 14px;
     line-height: 18px;
-    color: whitesmoke;
+    color: ${(props) => props.theme.colors.textDefault};
 
     a {
       font-weight: 800;
       text-decoration: none;
-      color: whitesmoke;
+      color: ${(props) => props.theme.colors.textDefault};
       margin-right: 6px;
     }
   }
@@ -142,37 +143,33 @@ const AddCommentsContainer = styled.div`
   width: 100%;
 
   form {
-    padding: 15px 10px;
+    height: 50px;
     width: 100%;
     display: flex;
     justify-content: space-between;
   }
 
+  span {
+    padding: 15px 10px;
+    color: ${(props) => props.theme.colors.textDefault};
+  }
+
   input {
     border: none;
+    padding: 15px 10px;
     font-size: 14px;
     background-color: inherit;
-    color: whitesmoke;
+    color: ${(props) => props.theme.colors.textDefault};
 
     &:focus {
       outline: none;
     }
   }
-
-  button {
-    font-size: 16px;
-    background-color: transparent;
-    color: #8f94fb;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-  }
 `;
 
 const WriteCommentSpan = styled.span`
-  left: 12.5px;
   position: absolute;
-  color: whitesmoke;
+  color: ${(props) => props.theme.colors.textDefault};
   font-size: 14px;
   line-height: 18px;
   pointer-events: none;
@@ -184,11 +181,24 @@ const WriteCommentSpan = styled.span`
 `;
 
 const Timer = styled.time`
-  padding-left: 10px;
+  padding: 10px;
   font-size: 10px;
   letter-spacing: 0.2px;
   line-height: 18px;
   text-transform: uppercase;
   margin-bottom: 4px;
-  color: whitesmoke;
+  color: ${(props) => props.theme.colors.textDefault};
+`;
+
+const SubmitButton = styled.button`
+  font-size: 16px;
+  color: #838384;
+  background: #3a3b3c;
+  height: 100%;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0px 10px;
+  ${({ disabled }) => !disabled && `background: #4395FD;color: #e5e7ec;`}
 `;

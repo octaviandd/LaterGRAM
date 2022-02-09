@@ -37,7 +37,7 @@ const MainContainer = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: #c609ec;
+    background-color: ${(props) => props.theme.colors.buttonPrimary};
     opacity: 0.6;
     position: absolute;
     top: 0;

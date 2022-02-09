@@ -17,10 +17,7 @@ export default function Comment({ comment }) {
           <Link to={`/profile/${comment.author._id}`}>
             <span>{comment.author.username}</span>
           </Link>
-          <span>{comment.content}</span>
-        </div>
-        <div>
-          <Timer>{timerDifference && timerDifference}</Timer>
+          <span style={{ color: "#363636" }}>{comment.content}</span>
         </div>
       </CommentSection>
     </Wrapper>
@@ -29,7 +26,9 @@ export default function Comment({ comment }) {
 
 const Wrapper = styled.div`
   display: flex;
-  padding: 15px 15px;
+  align-items: center;
+  padding: 5px 15px;
+  color: ${(props) => props.theme.colors.textDefault};
 `;
 
 const CommentLogo = styled.div`
@@ -38,6 +37,7 @@ const CommentLogo = styled.div`
     width: 32px;
     height: 32px;
     border-radius: 50%;
+    object-fit: cover;
   }
 `;
 
@@ -47,7 +47,6 @@ const CommentSection = styled.div`
 
   a {
     text-decoration: none;
-    color: whitesmoke;
     font-weight: 600;
     margin-right: 4px;
     word-wrap: break-word;
@@ -55,7 +54,6 @@ const CommentSection = styled.div`
 
   span {
     word-wrap: break-word;
-    color: whitesmoke;
   }
 `;
 
@@ -65,5 +63,5 @@ const Timer = styled.time`
   line-height: 18px;
   text-transform: uppercase;
   margin-bottom: 4px;
-  color: whitesmoke;
+  color: ${(props) => props.theme.colors.textDefault};
 `;

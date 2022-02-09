@@ -30,7 +30,7 @@ module.exports = function (env, args) {
     module: {
       rules: [
         {
-          test: /\.m?js$/,
+          test: /\.m?jsx?$/,
           exclude: /node_modules/,
           use: {
             loader: "babel-loader",
@@ -66,7 +66,7 @@ module.exports = function (env, args) {
       ],
     },
     resolve: {
-      extensions: [".tsx", ".ts", ".js"],
+      extensions: [".tsx", ".ts", ".js", "jsx"],
     },
     plugins: [
       isProduction &&

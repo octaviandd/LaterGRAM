@@ -25,7 +25,7 @@ export default function Home({ currentUser }) {
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  background: #18191a;
+  background: ${(props) => props.theme.colors.backgroundColor};
   padding-top: 25px;
   min-height: 100vh;
   width: 100%;

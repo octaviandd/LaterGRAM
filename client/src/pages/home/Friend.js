@@ -61,11 +61,13 @@ const Wrapper = styled.div`
     button {
       position: relative;
       border: none;
-      color: #0095f6;
-      background-color: inherit;
       font-weight: bold;
       font-size: 12px;
       cursor: pointer;
+      padding: 5px;
+      border-radius: 5px;
+      background-color: ${(props) => props.theme.colors.buttonPrimary};
+      color: #fff;
     }
 
     div {
@@ -75,7 +77,7 @@ const Wrapper = styled.div`
         line-height: 18px;
         font-size: 14px;
         font-weight: bold;
-        color: #e5e7ec;
+        color: ${(props) => props.theme.colors.textDefault};
 
         img {
           width: 30px;

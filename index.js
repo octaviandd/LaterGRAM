@@ -72,6 +72,10 @@ const startServer = async () => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 
+  if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"));
+  }
+
   app.listen({ port: 4000 }, (port) => {
     console.log("running");
   });

@@ -48,11 +48,11 @@ export default function HomeFeedPostGenerator({}) {
   const [createPost] = useMutation(CREATE_POST, {
     update(cache, { data: { createPost } }) {
       const data = cache.readQuery({ query: GET_ALL_POSTS });
-      let newData = data.getAllPosts.concat(createPost);
+      console.log({ data }, { createPost });
       cache.writeQuery({
         query: GET_ALL_POSTS,
         data: {
-          data: newData,
+          data: { getAllPosts: [createPost, ...data.getAllPosts] },
         },
       });
     },
@@ -156,7 +156,7 @@ const Wrapper = styled.div`
 `;
 
 const OpenModalButton = styled.button`
-  color: #8f94fb;
+  color: ${(props) => props.theme.colors.buttonPrimary};
   border: none;
   cursor: pointer;
   background-color: transparent;
@@ -289,7 +289,7 @@ const SubmitButton = styled.button`
   font-weight: bold;
   margin-top: 2rem;
   line-height: 18px;
-  ${({ disabled }) => !disabled && `background: #8ea1e1;color: #e5e7ec;`}
+  ${({ disabled }) => !disabled && `background: #4395FD;color: #e5e7ec;`}
 `;
 
 const ThumbsContainer = styled.div`
