@@ -5,6 +5,7 @@ const { ApolloServer } = require("apollo-server-express");
 const mongoose = require("mongoose");
 const merge = require("lodash.merge");
 const postResolver = require("./resolvers/postResolver");
+const path = require("path");
 const commentResolver = require("./resolvers/commentResolver");
 const userResolver = require("./resolvers/userResolver");
 const User = require("./schemas/userSchema");
