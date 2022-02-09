@@ -33,13 +33,6 @@ const startServer = async () => {
     next();
   });
 
-  if (process.env.NODE_ENV === "production") {
-    app.use(express.static("client/build"));
-  }
-  app.get("/", function (req, res) {
-    res.render(path.resolve(__dirname, "client/build/index.html"));
-  });
-
   const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -70,6 +63,8 @@ const startServer = async () => {
   } catch (error) {
     console.log(error);
   }
+
+  app.use(express.static(path.resolve(__dirname, "client/build")));
 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
