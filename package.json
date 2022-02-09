@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "node": "node index.js",
     "start": "nodemon index.js",
     "build:ui": "rm -rf build && cd ./client npm run build && cp -r build ../",
-    "start:both": "concurrently --kill-others-on-fail \"npm run start\" \"npm run dev --prefix client\""
+    "start:both": "concurrently --kill-others-on-fail \"npm run start\" \"npm run dev --prefix client\"",
+    "prod": "concurrently --kill-others-on-fail \"npm run node\" \"npm run dev --prefix client\""
   },
   "author": "",
   "license": "ISC",
